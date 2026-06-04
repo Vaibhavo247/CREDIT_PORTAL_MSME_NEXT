@@ -1,0 +1,113 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  User,
+  LayoutDashboard,
+  FileUser,
+  Banknote,
+  FileQuestion,
+  CheckSquare,
+  FileUp,
+  XSquare,
+  Users,
+  Download,
+  UserPlus,
+  Sliders,
+  ThumbsUp,
+  AlertCircle,
+  Menu,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+
+const menuConfig = {
+  CREDIT: [
+    { href: "/about", label: "MSME APPLICATION", icon: FileUser },
+    { href: "/dashboard", label: "FT CASH APPLICATIONS", icon: LayoutDashboard },
+    { href: "/disbursed", label: "DISBURSED", icon: Banknote },
+    { href: "/pending", label: "PENDING", icon: FileQuestion },
+    { href: "/approve", label: "APPROVED", icon: CheckSquare },
+    { href: "/one-pager", label: "ONE PAGER", icon: FileUp },
+    { href: "/rejected-pre", label: "REJECTED", icon: XSquare },
+    { href: "/msme-lead", label: "MSME LEAD", icon: Users },
+    { href: "/disbursed-download", label: "FI REPORT", icon: Download },
+    { href: "/add-employee", label: "ADD EMPLOYEE", icon: UserPlus },
+    { href: "/employee-access", label: "EMPLOYEE MANAGEMENT", icon: Sliders },
+    { href: "/ao-approved", label: "AO Approved", icon: ThumbsUp },
+    { href: "/ao-exception", label: "AO Exception", icon: AlertCircle },
+  ],
+  AUDIT: [
+    { href: "/about", label: "MSME APPLICATION", icon: FileUser },
+    { href: "/disbursed", label: "DISBURSED", icon: Banknote },
+    { href: "/pending", label: "PENDING", icon: FileQuestion },
+    { href: "/approve", label: "APPROVED", icon: CheckSquare },
+    { href: "/rejected-pre", label: "REJECTED", icon: XSquare },
+    { href: "/disbursed-download", label: "FI REPORT", icon: Download },
+  ],
+  USERACCESS: [
+    { href: "/add-employee", label: "ADD EMPLOYEE", icon: UserPlus },
+    { href: "/employee-access", label: "EMPLOYEE MANAGEMENT", icon: Sliders },
+  ],
+};
+
+export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
+  const pathname = usePathname();
+
+  const menuItems = userRole === "admin" ? menuConfig.CREDIT : (menuConfig[userRole] || []);
+
+  return (
+    <aside
+      className={`fixed top-16 left-0 bottom-0 bg-gradient-to-b from-[#0A2540] via-[#123150] to-[#0A2540] border-r border-[#1E3A5F] text-white flex flex-col z-30 transition-all duration-300 shadow-xl ${
+        collapsed ? "w-20" : "w-64"
+      }`}
+    >
+
+
+      {/* Navigation Menu */}
+      <nav id="sidebar-navigation" className="flex-1 overflow-y-auto py-4 px-3">
+        <ul role="list" className="flex flex-col gap-1 m-0 p-0 list-none">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+            const idString = `sidebar-nav-${item.href.replace('/', '')}`;
+            
+            return (
+              <li key={item.href}>
+                <Link
+                  id={idString}
+                  href={item.href}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${
+                    isActive
+                      ? "bg-brand-orange text-white font-medium shadow-md shadow-brand-orange/20"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <Icon
+                    size={18}
+                    className={`flex-shrink-0 transition-transform duration-200 group-hover:scale-110 ${
+                      isActive ? "text-white" : "text-white/70 group-hover:text-white"
+                    }`}
+                  />
+                  {!collapsed && (
+                    <span className="text-sm truncate tracking-wide">{item.label}</span>
+                  )}
+
+                  {/* Tooltip on Hover when Collapsed */}
+                  {collapsed && (
+                    <div className="absolute left-24 scale-0 group-hover:scale-100 transition-all duration-150 origin-left bg-gray-900 text-white text-xs rounded px-2 py-1.5 font-medium whitespace-nowrap shadow-md pointer-events-none">
+                      {item.label}
+                    </div>
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+    </aside>
+  );
+}
