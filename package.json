@@ -1,6 +1,6 @@
 {
-  "name": "tmp-next-app",
-  "version": "0.1.0",
+  "name": "suryoday-msme-portal",
+  "version": "1.0.18",
   "private": true,
   "scripts": {
     "dev": "next dev",

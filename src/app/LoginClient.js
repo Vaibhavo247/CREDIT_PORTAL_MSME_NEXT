@@ -77,7 +77,7 @@ function LoginContent() {
         <footer className="mt-8 text-[11px] text-white/40 text-center tracking-wide leading-normal">
           Authorized personnel only. Sessions are encrypted and audited.
           <br />
-          Version 1.0.18
+          Version {process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0"}
         </footer>
       </main>
     </div>

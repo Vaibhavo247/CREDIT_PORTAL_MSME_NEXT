@@ -116,6 +116,18 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
         </ul>
       </nav>
 
+      {/* Version Footer */}
+      {/* <div className="p-3 mt-auto border-t border-white/5 flex items-center justify-center">
+        {!collapsed ? (
+          <span className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">
+            v{process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0"}
+          </span>
+        ) : (
+          <span className="text-[9px] text-white/40 font-semibold" title={`v${process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0"}`}>
+            v{process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0"}
+          </span>
+        )}
+      </div> */}
     </aside>
   );
 }
