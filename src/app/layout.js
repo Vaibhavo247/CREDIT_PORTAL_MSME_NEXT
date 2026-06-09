@@ -19,8 +19,13 @@ export const metadata = {
   },
   description: "Official Suryoday Bank portal for managing and disbursing MSME loans.",
   robots: "noindex, nofollow",
+};
+
+export const viewport = {
   themeColor: "#FFFFFF",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }) {

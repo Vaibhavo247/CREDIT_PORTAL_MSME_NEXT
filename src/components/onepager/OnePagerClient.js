@@ -2,12 +2,15 @@
 
 import React, { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
 import Table from "@/components/ui/Table";
 import Spinner from "@/components/ui/Spinner";
 import { fetchPdfDataAction } from "@/app/actions";
 import toast from "react-hot-toast";
 
 export default function OnePagerClient({ initialData = [] }) {
+  const router = useRouter();
   const [data, setData] = useState(initialData);
   const [search, setSearch] = useState("");
   const [loadingPdf, setLoadingPdf] = useState(null);
@@ -117,6 +120,13 @@ export default function OnePagerClient({ initialData = [] }) {
     <div className="flex flex-col h-full animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
+          <button
+            onClick={() => router.back()}
+            className="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-brand-orange transition-colors mb-2 cursor-pointer"
+          >
+            <ChevronLeft size={16} />
+            Back
+          </button>
           <h1 className="text-xl font-bold text-brand-orange">One Pager Data</h1>
           <p className="text-xs text-gray-500 mt-1">
             Generate and download one-pager PDFs for all cases.

@@ -8,6 +8,7 @@ import { updateEmployeeStatus } from "@/app/actions";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import dayjs from "dayjs";
+import Button from "@/components/ui/Button";
 
 export default function EmployeeTableClient({ initialEmployees = [] }) {
   const router = useRouter();
@@ -138,19 +139,14 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
         const isLoading = updatingStatus[record.EmployeeId];
 
         return (
-          <button
+          <Button
+            size="sm"
             onClick={() => toggleStatus(record)}
             disabled={isLoading}
-            className={`px-3 py-1 text-xs font-semibold rounded-xl text-white transition-colors shadow-sm ${
-              isLoading
-                ? "bg-gray-400"
-                : isActive
-                ? "bg-emerald-600 hover:bg-emerald-700"
-                : "bg-red-500 hover:bg-red-600"
-            }`}
+            variant={isLoading ? "outline" : isActive ? "success" : "danger"}
           >
             {isLoading ? "Wait..." : isActive ? "ACTIVE" : "INACTIVE"}
-          </button>
+          </Button>
         );
       },
     },
@@ -159,15 +155,17 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
       fixed: "right",
       width: 100,
       render: (_, record) => (
-        <button
+        <Button
+          size="sm"
+          variant="outline"
+          className="border-none text-brand-blue"
           onClick={() => {
             const queryParams = new URLSearchParams({ employee: JSON.stringify(record) }).toString();
             router.push(`/add-employee?${queryParams}`);
           }}
-          className="text-brand-blue hover:text-brand-orange text-sm font-semibold transition"
         >
           Edit
-        </button>
+        </Button>
       ),
     },
   ];
@@ -180,12 +178,12 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
         </h1>
         
         <div className="flex items-center gap-3 self-end md:self-auto">
-          <button
+          <Button
+            variant="success"
             onClick={handleExportToExcel}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl transition-colors shadow-sm"
           >
             Export to Excel
-          </button>
+          </Button>
           
           <input
             type="text"
@@ -199,7 +197,7 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
 
       <Table
         columns={columns}
-        dataSource={filteredData}
+        dataSource={filteredEmployees}
         rowKey={(row) => row.EmployeeId}
       />
     </div>

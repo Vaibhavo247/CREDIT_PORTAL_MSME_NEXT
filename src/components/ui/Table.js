@@ -1,15 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Spinner from "./Spinner";
 
 export default function Table({
   columns = [],
   dataSource = [],
-  rowKey = (record) => record.id,
+  rowKey = "id",
   loading = false,
   emptyText = "No data available",
   pageSize = 10,
+  className = "",
 }) {
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Reset to first page when data changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [dataSource]);
+
+  const getVisiblePages = (current, total) => {
+    const delta = 1;
+    const range = [];
+    const rangeWithDots = [];
+    let l;
+
+    for (let i = 1; i <= total; i++) {
+      if (i === 1 || i === total || (i >= current - delta && i <= current + delta)) {
+        range.push(i);
+      }
+    }
+
+    for (let i of range) {
+      if (l) {
+        if (i - l === 2) {
+          rangeWithDots.push(l + 1);
+        } else if (i - l !== 1) {
+          rangeWithDots.push("...");
+        }
+      }
+      rangeWithDots.push(i);
+      l = i;
+    }
+
+    return rangeWithDots;
+  };
 
   const totalPages = Math.ceil(dataSource.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
@@ -65,7 +98,7 @@ export default function Table({
                 return (
                   <tr
                     key={key || rIdx}
-                    className="transition-colors duration-150 group"
+                    className="transition-colors duration-150 group hover:bg-orange-50/40"
                   >
                     {columns.map((col, cIdx) => {
                       const value = col.dataIndex ? record[col.dataIndex] : undefined;
@@ -89,31 +122,38 @@ export default function Table({
       </div>
 
       {/* Pagination Controls */}
-      {!loading && totalPages > 1 && (
-        <div className="flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-bank-border text-sm select-none">
-          <span className="text-gray-500 font-medium">
+      {!loading && dataSource.length > 0 && (
+        <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 bg-gray-50 border-t border-bank-border text-sm select-none gap-4">
+          <span className="text-gray-500 font-medium whitespace-nowrap">
             Showing <span className="text-gray-900">{startIndex + 1}</span> to{" "}
             <span className="text-gray-900">
               {Math.min(endIndex, dataSource.length)}
             </span>{" "}
             of <span className="text-gray-900">{dataSource.length}</span> records
           </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-wrap justify-center">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer"
+              className="px-2 sm:px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer"
             >
               Previous
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            {getVisiblePages(currentPage, totalPages).map((page, index) => (
               <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`w-8 h-8 rounded-lg flex items-center justify-center font-medium cursor-pointer ${
+                key={index}
+                onClick={() => page !== "..." && handlePageChange(page)}
+                disabled={page === "..."}
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-medium ${
+                  page === "..."
+                    ? "cursor-default text-gray-400"
+                    : "cursor-pointer"
+                } ${
                   currentPage === page
                     ? "bg-brand-orange text-white"
-                    : "border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+                    : page !== "..."
+                    ? "border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
+                    : ""
                 }`}
               >
                 {page}
@@ -122,7 +162,7 @@ export default function Table({
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer"
+              className="px-2 sm:px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer"
             >
               Next
             </button>

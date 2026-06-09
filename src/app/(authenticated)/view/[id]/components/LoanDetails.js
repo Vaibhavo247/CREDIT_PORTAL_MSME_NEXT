@@ -1,6 +1,7 @@
 import React from "react";
 import toast from "react-hot-toast";
 import { DetailsField } from "./SharedComponents";
+import Button from "@/components/ui/Button";
 
 export default function LoanDetails({
   summary,
@@ -39,17 +40,18 @@ export default function LoanDetails({
             <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
               CRIF Report
             </span>
-            <button
+            <Button
               onClick={() =>
                 window.open(
                   `http://MSME.suryodaybank.com/crif_html/bre=MSME/report_id=${summary.application_id}`,
                   "_blank"
                 )
               }
-              className="self-start px-4 py-2 border border-brand-orange text-brand-orange hover:bg-brand-orange/5 text-sm font-semibold rounded-xl transition cursor-pointer"
+              variant="outline"
+              className="self-start border-brand-orange text-brand-orange hover:bg-brand-orange/5"
             >
               Open CRIF Bureau Report
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -76,13 +78,14 @@ export default function LoanDetails({
                   className="text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-brand-blue hover:file:bg-gray-200 cursor-pointer"
                 />
                 {selectedPdf && (
-                  <button
+                  <Button
                     onClick={handleUdyamDocSubmit}
                     disabled={loading}
-                    className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition cursor-pointer"
+                    variant="success"
+                    className="px-3 py-1.5"
                   >
                     Upload
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
@@ -92,12 +95,13 @@ export default function LoanDetails({
               <span className="text-xs font-semibold text-gray-500">
                 Update Landmark Details
               </span>
-              <button
+              <Button
                 onClick={() => setIsLandmarkModalOpen(true)}
-                className="px-4 py-2 bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-semibold rounded-xl transition self-start cursor-pointer"
+                variant="primary"
+                className="self-start"
               >
                 Edit Landmark
-              </button>
+              </Button>
             </div>
           </div>
         )}

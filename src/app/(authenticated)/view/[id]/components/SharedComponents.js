@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import FullscreenImagePreview from "@/components/ui/FullscreenImagePreview";
 
 export function ZoomableImage({ src, alt, className, style }) {
   const [isOpen, setIsOpen] = useState(false);
-  
-  // Clean the source if it's a raw base64 string
+
   let formattedSrc = src;
   if (src && typeof src === "string") {
     let cleanSrc = src.replace(/^["']|["']$/g, '').trim().replace(/\s/g, '');
@@ -24,21 +24,12 @@ export function ZoomableImage({ src, alt, className, style }) {
         style={style}
         onClick={() => setIsOpen(true)}
       />
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-fade-in"
-          onClick={() => setIsOpen(false)}
-        >
-          <img
-            src={formattedSrc}
-            alt={alt}
-            className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl border border-white/10"
-          />
-          <button className="absolute top-6 right-6 text-white hover:text-gray-300 p-2 bg-white/10 rounded-full hover:bg-white/20 cursor-pointer z-[110]">
-            Close Preview
-          </button>
-        </div>
-      )}
+      <FullscreenImagePreview
+        src={formattedSrc}
+        alt={alt}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
     </>
   );
 }

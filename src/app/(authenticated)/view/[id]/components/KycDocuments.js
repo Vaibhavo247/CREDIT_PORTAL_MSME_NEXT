@@ -1,5 +1,6 @@
 import React from "react";
 import { Download } from "lucide-react";
+import Button from "@/components/ui/Button";
 
 export default function KycDocuments({ summary, docs, downloadBase64Doc }) {
   return (
@@ -16,13 +17,14 @@ export default function KycDocuments({ summary, docs, downloadBase64Doc }) {
           <span className="text-xs font-bold text-gray-600 mb-4 uppercase tracking-wider">
             Aadhaar Photo
           </span>
-          <button
+          <Button
             onClick={() => downloadBase64Doc(summary.aadhar_photo, `${summary.full_name}_aadhar.jpg`, "image/jpeg")}
-            className="w-full py-2 bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+            variant="outline"
+            className="w-full justify-center flex gap-2"
           >
             <Download size={14} />
             Download
-          </button>
+          </Button>
         </div>
 
         {/* Card 2 */}
@@ -30,14 +32,15 @@ export default function KycDocuments({ summary, docs, downloadBase64Doc }) {
           <span className="text-xs font-bold text-gray-600 mb-4 uppercase tracking-wider">
             Aadhaar Response PDF
           </span>
-          <button
+          <Button
             disabled={!docs.aadhar_response_code}
             onClick={() => downloadBase64Doc(docs.aadhar_response_code, "aadhar_response.pdf")}
-            className="w-full py-2 bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="outline"
+            className="w-full justify-center flex gap-2"
           >
             <Download size={14} />
             Download
-          </button>
+          </Button>
         </div>
 
         {/* Card 3 */}
@@ -45,14 +48,15 @@ export default function KycDocuments({ summary, docs, downloadBase64Doc }) {
           <span className="text-xs font-bold text-gray-600 mb-4 uppercase tracking-wider">
             Legaality Signed Doc
           </span>
-          <button
+          <Button
             disabled={!summary.leegality_signed_doc}
             onClick={() => downloadBase64Doc(summary.leegality_signed_doc, "leegality_signed.pdf")}
-            className="w-full py-2 bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="outline"
+            className="w-full justify-center flex gap-2"
           >
             <Download size={14} />
             Download
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -92,6 +92,33 @@ export const rejectCase = async (id, comment, approvedBy) => actionWrapper("reje
   return resp?.data;
 });
 
+// Server Action for verifying voter ID
+export const verifyVoterId = async (id, approvedBy, status, comment = "") => actionWrapper("verifyVoterId", async () => {
+  const resp = await serverFetch("verifyVoterId", {
+      method: "POST",
+      body: {
+        id,
+        approved_by: approvedBy,
+        status,
+        comment,
+      },
+    });
+  return resp?.data;
+});
+
+// Server Action for fetching MSME Lead image
+export const fetchMsmeLeadImageAction = async (leadNumber) => actionWrapper("fetchMsmeLeadImageAction", async () => {
+  const resp = await serverFetch(`getMsmeLeadImage/${leadNumber}`);
+  return resp?.data;
+});
+
+export const fetchFiReportAction = async () => actionWrapper("fetchFiReportAction", async () => {
+  const resp = await serverFetch("get-msme-customer-details", {
+      method: "GET",
+    });
+  return resp?.data;
+});
+
 // Server Action to upload a business image
 export const uploadBusinessImage = async (id, imgName, base64Image) => actionWrapper("uploadBusinessImage", async () => {
   const resp = await serverFetch(`webUploadBusinessImage/${id}`, {

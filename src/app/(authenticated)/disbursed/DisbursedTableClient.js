@@ -9,26 +9,19 @@ import Table from "@/components/ui/Table";
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { Card } from "@/components/ui/Card";
 import PageHeader from "@/components/ui/PageHeader";
 import Badge from "@/components/ui/Badge";
 import Spinner from "@/components/ui/Spinner";
 import { checkAgentAccess, saveActiveAgent } from "@/app/actions";
+import { useTableSearch } from "@/hooks/useTableSearch";
+import { useCallback } from "react";
 
 export default function DisbursedTableClient({ initialData = [], title = "DISBURSED APPLICATIONS" }) {
   const router = useRouter();
-  const [data, setData] = useState(initialData);
-  const [filteredData, setFilteredData] = useState(initialData);
-  const [searchText, setSearchText] = useState("");
-  const [loading, setLoading] = useState(false);
-  
+
   const [selectedRange, setSelectedRange] = useState("all");
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
-
-  const [warningModal, setWarningModal] = useState({
-    isOpen: false,
-    user: "",
-    msmeIdentifier: "",
-  });
 
   const loanAmountRanges = [
     { label: "All", value: "all", min: 0, max: 999999999 },
@@ -37,40 +30,38 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
     { label: "₹2,00,000 - ₹5,00,000", value: "200000-500000", min: 200000, max: 500000 },
   ];
 
-  useEffect(() => {
-    setData(initialData);
-    let filtered = initialData;
-
-    // Text Search
-    if (searchText) {
-      filtered = filtered.filter(
-        (item) =>
-          item.application_id?.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.full_name?.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-
+  const additionalFilter = useCallback((item) => {
     // Loan Amount Range
     const range = loanAmountRanges.find(r => r.value === selectedRange) || loanAmountRanges[0];
     if (range.value !== "all") {
-      filtered = filtered.filter(item => {
-        const loanAmount = item.final_loan_amount || 0;
-        return loanAmount >= range.min && loanAmount <= range.max;
-      });
+      const loanAmount = item.final_loan_amount || 0;
+      if (loanAmount < range.min || loanAmount > range.max) return false;
     }
 
     // Date Range
     if (dateRange.start && dateRange.end) {
-      filtered = filtered.filter(item => {
-        if (!item.created_on) return false;
-        const itemDate = dayjs(item.created_on);
-        return itemDate.isAfter(dayjs(dateRange.start).subtract(1, 'day')) && 
-               itemDate.isBefore(dayjs(dateRange.end).add(1, 'day'));
-      });
+      if (!item.bre_executed_time) return false;
+      const itemDate = dayjs(item.bre_executed_time);
+      const sDate = dayjs(dateRange.start).startOf("day");
+      const eDate = dayjs(dateRange.end).endOf("day");
+      if (itemDate.isBefore(sDate) || itemDate.isAfter(eDate)) return false;
     }
 
-    setFilteredData(filtered);
-  }, [searchText, selectedRange, dateRange, initialData]);
+    return true;
+  }, [selectedRange, dateRange]);
+
+  const { filteredData, searchText, handleSearch: setSearchText } = useTableSearch(
+    initialData, 
+    ["application_id", "full_name"],
+    additionalFilter
+  );
+
+  const [loading, setLoading] = useState(false);
+  const [warningModal, setWarningModal] = useState({
+    isOpen: false,
+    user: "",
+    msmeIdentifier: "",
+  });
 
   const handleSearch = (val) => {
     setSearchText(val);
@@ -242,48 +233,59 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
   ];
 
   return (
-    <div className="flex flex-col gap-6">
-      <PageHeader title={title}>
-        <Button variant="success" onClick={exportToExcel}>
-          Export to Excel
-        </Button>
-        
+    <div className="flex flex-col h-full bg-slate-50 relative">
+      <PageHeader title={title} showBack={false}>
         <Input
-          type="text"
           placeholder="Search App ID or Name..."
           value={searchText}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="w-64 bg-gray-50/50"
+          onChange={(e) => {
+            const value = e.target.value;
+            const isValid = /^[a-zA-Z0-9]*$/.test(value);
+            if (isValid) handleSearch(value);
+          }}
+          wrapperClassName="w-64"
         />
+        <Button variant="primary" onClick={exportToExcel}>
+          Export Excel
+        </Button>
       </PageHeader>
 
-      {/* Custom Disbursed Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Loan Amount Range</label>
-          <select 
-            value={selectedRange} 
-            onChange={(e) => setSelectedRange(e.target.value)}
-            className="w-full px-4 py-2 border border-bank-border rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange"
-          >
-            {loanAmountRanges.map((range) => (
-              <option key={range.value} value={range.value}>{range.label}</option>
-            ))}
-          </select>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="flex-1">
-             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Start Date</label>
-             <input type="date" value={dateRange.start} onChange={(e) => setDateRange(prev => ({...prev, start: e.target.value}))} className="w-full px-4 py-2 border border-bank-border rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange" />
+      <div className="p-4 sm:p-6 lg:p-8 flex-1 overflow-auto">
+        {/* Custom Disbursed Filters */}
+        <Card className="mb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 w-full md:w-auto">
+            <div className="w-full sm:w-64">
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 ml-1">Loan Amount Range</label>
+              <select 
+                value={selectedRange} 
+                onChange={(e) => setSelectedRange(e.target.value)}
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all"
+              >
+                {loanAmountRanges.map((range) => (
+                  <option key={range.value} value={range.value}>{range.label}</option>
+                ))}
+              </select>
+            </div>
+            
+            <Input 
+              type="date"
+              label="Start Date"
+              value={dateRange.start}
+              onChange={(e) => setDateRange(prev => ({...prev, start: e.target.value}))}
+              wrapperClassName="w-full sm:w-40"
+            />
+            
+            <Input 
+              type="date"
+              label="End Date"
+              value={dateRange.end}
+              onChange={(e) => setDateRange(prev => ({...prev, end: e.target.value}))}
+              wrapperClassName="w-full sm:w-40"
+            />
           </div>
-          <div className="flex-1">
-             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">End Date</label>
-             <input type="date" value={dateRange.end} onChange={(e) => setDateRange(prev => ({...prev, end: e.target.value}))} className="w-full px-4 py-2 border border-bank-border rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange" />
-          </div>
-        </div>
-      </div>
+        </Card>
 
-      {/* High Fidelity Table */}
+        {/* High Fidelity Table */}
       <Table
         columns={columns}
         dataSource={filteredData}
@@ -316,6 +318,7 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
           Do you want to continue?
         </p>
       </Modal>
+      </div>
     </div>
   );
 }

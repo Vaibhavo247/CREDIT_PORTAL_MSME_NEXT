@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "development") {
 
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://msme.suryodaybank.co.in/api";
-const API_KEY = process.env.API_KEY || "ab5a4552-2412-4724-a254-18a05e722e3d";
+const API_KEY = process.env.API_KEY;
 
 export function encryptData(data) {
   try {
@@ -59,7 +59,7 @@ export async function serverFetch(endpoint, options = {}) {
   const token = await getAuthToken();
   const baseUrl = options.baseUrl || API_BASE_URL;
   const url = `${baseUrl}/${endpoint.replace(/^\//, "")}`;
-  console.log("SERVER FETCH TO:", url, "TOKEN:", !!token);
+
 
   const headers = {
     "app-version": "1.0.18",
@@ -73,6 +73,8 @@ export async function serverFetch(endpoint, options = {}) {
   if (API_KEY) {
     headers["x-api-key"] = API_KEY;
   }
+
+  console.log("SERVER FETCH TO:", url, "HEADERS:", { ...headers, Authorization: !!token ? "Bearer <token>" : undefined });
 
   let body = options.body;
   if (body && (options.method === "POST" || options.method === "PUT" || options.method === "PATCH")) {

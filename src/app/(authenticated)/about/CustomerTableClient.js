@@ -11,28 +11,16 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import PageHeader from "@/components/ui/PageHeader";
 import Spinner from "@/components/ui/Spinner";
+import { useTableSearch } from "@/hooks/useTableSearch";
 import { checkAgentAccess, saveActiveAgent } from "@/app/actions";
 
 export default function CustomerTableClient({ initialData = [], title = "MSME APPLICATIONS", source = "" }) {
   const router = useRouter();
-  const [data, setData] = useState(initialData);
-  const [filteredData, setFilteredData] = useState(initialData);
-  const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setData(initialData);
-    if (!searchText) {
-      setFilteredData(initialData);
-    } else {
-      const filtered = initialData.filter(
-        (item) =>
-          item.application_id?.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.full_name?.toLowerCase().includes(searchText.toLowerCase())
-      );
-      setFilteredData(filtered);
-    }
-  }, [initialData, searchText]);
+  
+  const { filteredData, searchText, handleSearch } = useTableSearch(initialData, [
+    "application_id", "full_name"
+  ]);
 
   // Access modal state
   const [warningModal, setWarningModal] = useState({
@@ -41,21 +29,7 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
     msmeIdentifier: "",
   });
 
-  const handleSearch = (value) => {
-    // Alphanumeric input validation matching the original searchBar rules
-    const isValid = /^[a-zA-Z0-9]*$/.test(value);
-    if (!isValid) return;
-
-    setSearchText(value);
-    const filtered = data.filter(
-      (item) =>
-        item.application_id?.toLowerCase().includes(value.toLowerCase()) ||
-        item.full_name?.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
-
-  const exportToExcel = () => {
+  const handleExportToExcel = () => {
     const exportData = filteredData.map((item) => ({
       Vertical: item.BusinessVertical || "-",
       "Credit Receive Date": item.bre_executed_time || "-",
@@ -239,26 +213,29 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
   return (
     <div className="flex flex-col gap-6">
       <PageHeader title={title}>
-        <Button variant="success" onClick={exportToExcel}>
+        <Button variant="success" onClick={handleExportToExcel}>
           Export to Excel
         </Button>
         
         <Input
-          type="text"
-          placeholder="Search App ID or Name..."
+          placeholder="Search by ID or Name"
           value={searchText}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="w-64 bg-gray-50/50"
+          onChange={(e) => {
+            const value = e.target.value;
+            const isValid = /^[a-zA-Z0-9 ]*$/.test(value);
+            if (isValid) handleSearch(value);
+          }}
+          className="pl-10 w-full"
         />
       </PageHeader>
 
       {/* High Fidelity Table */}
-      <Table
-        columns={columns}
-        dataSource={filteredData}
-        rowKey={(row) => row.msme_identifier}
-        loading={loading}
-      />
+        <Table 
+          columns={columns} 
+          dataSource={filteredData} 
+          rowKey={(item) => item.msme_identifier || item.application_id || Math.random()}
+          emptyText="No active applications found"
+        />
 
       {/* Full Screen Loading Overlay for Navigation */}
       {loading && !warningModal.isOpen && (

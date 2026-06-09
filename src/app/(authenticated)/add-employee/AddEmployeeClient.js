@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
+import Button from "@/components/ui/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { insertEmployee, fetchEmployeeDetail } from "@/app/actions";
 import toast from "react-hot-toast";
@@ -393,21 +394,23 @@ function AddEmployeeForm() {
               </div>
 
               <div className="pt-4 flex gap-4">
-                <button
+                <Button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-2.5 bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold rounded-xl transition shadow-sm disabled:bg-gray-400"
+                  variant="primary"
+                  className="px-6 py-2.5"
                 >
                   {loading ? "Submitting..." : isEditing ? "Update Employee" : "Add Employee"}
-                </button>
+                </Button>
                 {isEditing && (
-                  <button
+                  <Button
                     type="button"
                     onClick={() => router.back()}
-                    className="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold rounded-xl transition"
+                    variant="outline"
+                    className="px-6 py-2.5 bg-gray-100 border-none hover:bg-gray-200 text-gray-700"
                   >
                     Cancel
-                  </button>
+                  </Button>
                 )}
               </div>
             </form>
@@ -425,13 +428,14 @@ function AddEmployeeForm() {
                     className="hidden"
                   />
                 </label>
-                <button
+                <Button
                   type="button"
                   onClick={downloadTemplate}
-                  className="px-4 py-2 bg-white border border-bank-border text-brand-blue hover:text-brand-orange hover:bg-gray-50 text-sm font-bold rounded-xl transition cursor-pointer"
+                  variant="outline"
+                  className="px-4 py-2"
                 >
                   Download Template
-                </button>
+                </Button>
               </div>
 
               {/* Bulk Data Table Preview */}
@@ -439,13 +443,14 @@ function AddEmployeeForm() {
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center justify-between">
                     <h3 className="font-bold text-gray-700">Preview ({bulkData.length} records)</h3>
-                    <button
+                    <Button
                       onClick={handleBulkSubmit}
                       disabled={loading || uploadStatus === "completed"}
-                      className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-xl transition shadow-sm disabled:bg-gray-400"
+                      variant="success"
+                      className="px-6 py-2"
                     >
                       {loading ? "Uploading..." : `Upload ${bulkData.length} Employees`}
-                    </button>
+                    </Button>
                   </div>
 
                   <div className="overflow-x-auto border border-gray-200 rounded-xl">

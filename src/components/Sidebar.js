@@ -21,6 +21,8 @@ import {
   Menu,
   ChevronLeft,
   ChevronRight,
+  UserCheck,
+  UserX,
 } from "lucide-react";
 
 const menuConfig = {
@@ -33,11 +35,14 @@ const menuConfig = {
     { href: "/one-pager", label: "ONE PAGER", icon: FileUp },
     { href: "/rejected-pre", label: "REJECTED", icon: XSquare },
     { href: "/msme-lead", label: "MSME LEAD", icon: Users },
-    { href: "/disbursed-download", label: "FI REPORT", icon: Download },
+    { href: "/fi-report", label: "FI REPORT", icon: Download },
     { href: "/add-employee", label: "ADD EMPLOYEE", icon: UserPlus },
     { href: "/employee-access", label: "EMPLOYEE MANAGEMENT", icon: Sliders },
     { href: "/ao-approved", label: "AO Approved", icon: ThumbsUp },
     { href: "/ao-exception", label: "AO Exception", icon: AlertCircle },
+    { href: "/voter-id-pending", label: "VOTER ID PENDING", icon: UserCheck },
+    { href: "/voter-id-approved", label: "VOTER ID APPROVED", icon: UserCheck },
+    { href: "/voter-id-rejected", label: "VOTER ID REJECTED", icon: UserX },
   ],
   AUDIT: [
     { href: "/about", label: "MSME APPLICATION", icon: FileUser },
@@ -45,7 +50,10 @@ const menuConfig = {
     { href: "/pending", label: "PENDING", icon: FileQuestion },
     { href: "/approve", label: "APPROVED", icon: CheckSquare },
     { href: "/rejected-pre", label: "REJECTED", icon: XSquare },
-    { href: "/disbursed-download", label: "FI REPORT", icon: Download },
+    { href: "/fi-report", label: "FI REPORT", icon: Download },
+    { href: "/voter-id-pending", label: "VOTER ID PENDING", icon: UserCheck },
+    { href: "/voter-id-approved", label: "VOTER ID APPROVED", icon: UserCheck },
+    { href: "/voter-id-rejected", label: "VOTER ID REJECTED", icon: UserX },
   ],
   USERACCESS: [
     { href: "/add-employee", label: "ADD EMPLOYEE", icon: UserPlus },
@@ -67,8 +75,8 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
 
 
       {/* Navigation Menu */}
-      <nav id="sidebar-navigation" className="flex-1 overflow-y-auto py-4 px-3">
-        <ul role="list" className="flex flex-col gap-1 m-0 p-0 list-none">
+      <nav id="sidebar-navigation" className="flex-1 overflow-y-auto py-2 px-3">
+        <ul role="list" className="flex flex-col gap-0.5 m-0 p-0 list-none">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -79,20 +87,20 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
                 <Link
                   id={idString}
                   href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${
+                  className={`flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-200 group relative ${
                     isActive
                       ? "bg-brand-orange text-white font-medium shadow-md shadow-brand-orange/20"
                       : "text-white/70 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <Icon
-                    size={18}
+                    size={16}
                     className={`flex-shrink-0 transition-transform duration-200 group-hover:scale-110 ${
                       isActive ? "text-white" : "text-white/70 group-hover:text-white"
                     }`}
                   />
                   {!collapsed && (
-                    <span className="text-sm truncate tracking-wide">{item.label}</span>
+                    <span className="text-[13px] truncate tracking-wide">{item.label}</span>
                   )}
 
                   {/* Tooltip on Hover when Collapsed */}

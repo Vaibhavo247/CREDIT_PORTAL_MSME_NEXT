@@ -1,5 +1,6 @@
 import React from "react";
-import { Download } from "lucide-react";
+import { CheckCircle, XCircle, Clock, Download } from "lucide-react";
+import Button from "@/components/ui/Button";
 import { ZoomableImage, SimpleCarousel } from "./SharedComponents";
 
 export default function SidePanels({
@@ -46,13 +47,14 @@ export default function SidePanels({
           </div>
 
           {docs?.customer_photo && (
-            <button
+            <Button
+              variant="outline"
+              className="w-full text-xs"
               onClick={() => downloadBase64Doc(docs.customer_photo, `${summary.full_name}_photo.jpg`, "image/jpeg")}
-              className="w-full py-2 border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm"
             >
-              <Download size={14} />
+              <Download size={14} className="mr-2" />
               Download Photo
-            </button>
+            </Button>
           )}
         </div>
         <div className="bg-gray-50 border-t border-bank-border px-4 py-3.5 text-center text-xs font-medium text-gray-500 leading-normal select-none">
@@ -110,26 +112,28 @@ export default function SidePanels({
 
           {/* NTBVL single image download */}
           {isNtb && houseImage && (
-            <button
+            <Button
+              variant="outline"
+              className="w-full text-xs mt-3"
               onClick={() => downloadBase64Doc(houseImage, `${summary.full_name}_house.jpg`, "image/jpeg")}
-              className="w-full py-2 border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm"
             >
-              <Download size={14} />
+              <Download size={14} className="mr-2" />
               Download House Image
-            </button>
+            </Button>
           )}
 
           {/* MSME individual image downloads */}
           {!isNtb && businessImagesList.length > 0 && (
             <div className="w-full flex flex-col gap-2 mt-2">
               {businessImagesList.map((img) => (
-                <button
+                <Button
                   key={img.index}
+                  variant="outline"
+                  className="w-full text-xs"
                   onClick={() => downloadBase64Doc(img.src, `${summary.full_name}_business_${img.index}.jpg`, "image/jpeg")}
-                  className="w-full py-1.5 bg-gray-50 hover:bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg border border-gray-200 transition text-center cursor-pointer"
                 >
                   Download Image {img.index}
-                </button>
+                </Button>
               ))}
             </div>
           )}
@@ -147,27 +151,33 @@ export default function SidePanels({
             Workflow Actions
           </h4>
 
-          <button
+          <Button
+            variant="primary"
             disabled={!isNtb && !isBusinessDetailsChecked}
+            className="w-full bg-brand-orange hover:bg-orange-600 shadow-md shadow-brand-orange/20"
             onClick={() => setIsApproveConfirmOpen(true)}
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md shadow-emerald-600/10 transition cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
+            <CheckCircle size={18} className="mr-2" />
             Approve Case
-          </button>
+          </Button>
 
-          <button
+          <Button
+            variant="primary"
+            className="w-full bg-brand-blue hover:bg-blue-800 shadow-md shadow-brand-blue/20"
             onClick={() => setIsPendingConfirmOpen(true)}
-            className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl shadow-md shadow-amber-500/10 transition cursor-pointer text-sm"
           >
+            <Clock size={18} className="mr-2" />
             Mark as Pending
-          </button>
+          </Button>
 
-          <button
+          <Button
+            variant="danger"
+            className="w-full"
             onClick={() => setIsRejectConfirmOpen(true)}
-            className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-md shadow-red-600/10 transition cursor-pointer text-sm"
           >
+            <XCircle size={18} className="mr-2" />
             Reject Case
-          </button>
+          </Button>
 
           {!isNtb && !isBusinessDetailsChecked && (
             <div className="text-[10px] text-amber-600 text-center font-medium mt-1 leading-normal">
