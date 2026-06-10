@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { renderToStream } from '@react-pdf/renderer';
 import OnePagerPDF from '@/components/onepager/OnePagerPDF';
-import { serverFetch } from '@/utils/serverApi';
+import { serverFetch } from '@/services/api';
 import { fetchBreReportData } from '@/app/actions';
 import { Readable } from 'stream';
 

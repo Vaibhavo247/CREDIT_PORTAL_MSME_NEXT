@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { redirect } from "next/navigation";
-import { getAuthToken, serverFetch } from "./serverApi";
+import { getAuthToken, serverFetch } from "../services/api";
 import { cookies } from "next/headers";
 
 export async function checkAuth(allowedRoles = []) {

@@ -1,8 +1,9 @@
 import React from "react";
 export const dynamic = 'force-dynamic';
 import { checkAuth } from "@/utils/auth";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
 import CustomerTableClient from "./CustomerTableClient";
+import { APP_ROLES } from "@/constants";
 
 export const metadata = {
   title: "Active Applications",
@@ -10,6 +11,8 @@ export const metadata = {
 };
 
 export default async function AboutPage() {
+  await checkAuth([APP_ROLES.ADMIN, APP_ROLES.CREDIT, APP_ROLES.AUDIT]);
+
   // Ensure only CREDIT and AUDIT roles can access
   await checkAuth(["CREDIT", "AUDIT"]);
 

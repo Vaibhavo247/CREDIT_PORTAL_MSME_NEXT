@@ -1,6 +1,6 @@
 import React from "react";
 import ViewPersonClient from "./ViewPersonClient";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
 import { checkAuth } from "@/utils/auth";
 
 export async function generateMetadata({ params }) {

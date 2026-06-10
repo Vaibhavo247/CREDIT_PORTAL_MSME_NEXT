@@ -1,6 +1,8 @@
 import React from "react";
 import MsmeLeadClient from "./MsmeLeadClient";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
+import { checkAuth } from "@/utils/auth";
+import { APP_ROLES } from "@/constants";
 
 export const metadata = {
   title: "MSME Lead",
@@ -8,6 +10,8 @@ export const metadata = {
 };
 
 export default async function MsmeLeadPage() {
+  await checkAuth([APP_ROLES.ADMIN, APP_ROLES.CREDIT]);
+
   let initialData = [];
 
   try {

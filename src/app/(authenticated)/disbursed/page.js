@@ -1,7 +1,9 @@
 import React from "react";
 export const dynamic = 'force-dynamic';
 import DisbursedTableClient from "./DisbursedTableClient";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
+import { checkAuth } from "@/utils/auth";
+import { APP_ROLES } from "@/constants";
 
 export const metadata = {
   title: "Disbursed Applications",
@@ -9,6 +11,8 @@ export const metadata = {
 };
 
 export default async function DisbursedPage() {
+  await checkAuth([APP_ROLES.ADMIN, APP_ROLES.CREDIT, APP_ROLES.AUDIT]);
+
   let initialData = [];
   try {
     const resp = await serverFetch("get-disbursed-records");

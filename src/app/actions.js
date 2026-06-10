@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
 
 async function actionWrapper(actionName, fn) {
   try {

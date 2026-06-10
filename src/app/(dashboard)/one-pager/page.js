@@ -1,6 +1,8 @@
 import React from "react";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
 import OnePagerClient from "@/components/onepager/OnePagerClient";
+import { checkAuth } from "@/utils/auth";
+import { APP_ROLES } from "@/constants";
 
 export const dynamic = 'force-dynamic';
 
@@ -10,6 +12,8 @@ export const metadata = {
 };
 
 export default async function OnePagerPage() {
+  await checkAuth([APP_ROLES.ADMIN, APP_ROLES.CREDIT]);
+
   let records = [];
 
   try {

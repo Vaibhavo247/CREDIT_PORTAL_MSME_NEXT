@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
 
 export async function GET(request, { params }) {
   try {

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { APP_ROLES } from "@/constants";
 import { usePathname } from "next/navigation";
 import {
   User,
@@ -64,7 +65,7 @@ const menuConfig = {
 export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
   const pathname = usePathname();
 
-  const menuItems = userRole === "admin" ? menuConfig.CREDIT : (menuConfig[userRole] || []);
+  const menuItems = userRole === APP_ROLES.ADMIN ? menuConfig.CREDIT : (menuConfig[userRole] || []);
 
   return (
     <aside

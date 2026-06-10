@@ -1,9 +1,13 @@
 import React from "react";
 export const dynamic = 'force-dynamic';
 import EmployeeTableClient from "./EmployeeTableClient";
-import { serverFetch } from "@/utils/serverApi";
+import { serverFetch } from "@/services/api";
+import { checkAuth } from "@/utils/auth";
+import { APP_ROLES } from "@/constants";
 
 export default async function EmployeeAccessPage() {
+  await checkAuth([APP_ROLES.ADMIN, APP_ROLES.CREDIT, APP_ROLES.USERACCESS]);
+
   let initialEmployees = [];
   try {
     const resp = await serverFetch("getemployee");
