@@ -295,7 +295,7 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
 
       {/* Full Screen Loading Overlay for Navigation */}
       {loading && !warningModal.isOpen && (
-        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-slate-900/40 backdrop-blur-sm">
           <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center">
             <Spinner size="large" text="Loading Application Details..." />
           </div>

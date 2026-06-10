@@ -487,7 +487,7 @@ function AddEmployeeForm() {
                               >
                                 {emp.status}
                               </span>
-                              {emp.error && <p className="text-[10px] text-red-500 mt-1 max-w-[150px] truncate" title={emp.error}>{emp.error}</p>}
+                              {emp.error && <p className="text-[10px] text-red-500 mt-1 max-w-37.5 truncate" title={emp.error}>{emp.error}</p>}
                             </td>
                           </tr>
                         ))}

@@ -22,7 +22,7 @@ export default function BusinessDetails({
 }) {
   return (
     <div className="border border-bank-border rounded-2xl overflow-hidden shadow-sm bg-white">
-      <div className="bg-gradient-to-r from-brand-blue to-[#043662] px-6 py-4 flex items-center justify-between select-none">
+      <div className="bg-linear-to-r from-brand-blue to-[#043662] px-6 py-4 flex items-center justify-between select-none">
         <h3 className="text-sm font-bold uppercase tracking-wider text-white">
           Business Details
         </h3>
@@ -93,7 +93,7 @@ export default function BusinessDetails({
             id="mobile-auth-check"
             checked={isBusinessDetailsChecked}
             onChange={(e) => setIsBusinessDetailsChecked(e.target.checked)}
-            className="w-5 h-5 rounded border-gray-300 text-brand-orange focus:ring-brand-orange accent-brand-orange flex-shrink-0 cursor-pointer mt-0.5"
+            className="w-5 h-5 rounded border-gray-300 text-brand-orange focus:ring-brand-orange accent-brand-orange shrink-0 cursor-pointer mt-0.5"
           />
           <label htmlFor="mobile-auth-check" className="text-xs text-amber-900 leading-relaxed font-semibold cursor-pointer select-none">
             I/We have authenticated the mobile number mentioned on the Shop board and the business mobile number entered by the sales is same.

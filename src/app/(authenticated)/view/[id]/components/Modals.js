@@ -75,7 +75,7 @@ export default function Modals({
             {loanJourney.map((step, idx) => (
               <div key={idx} className="relative pl-6">
                 {/* Dot marker */}
-                <span className={`absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white shadow-sm ${
+                <span className={`absolute -left-1.75 top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white shadow-sm ${
                   step.status === "Approved" ? "bg-emerald-500" :
                   step.status === "Pending" ? "bg-amber-500" :
                   step.status === "Reverted" ? "bg-red-500" : "bg-brand-blue"
@@ -250,7 +250,7 @@ export default function Modals({
         onOk={handleApproveAction}
       >
         <p className="text-sm text-gray-600 font-medium leading-relaxed flex items-center gap-3">
-          <AlertCircle size={32} className="text-emerald-600 flex-shrink-0" />
+          <AlertCircle size={32} className="text-emerald-600 shrink-0" />
           Are you sure you want to approve this MSME Credit applicant? This process is audited and irreversible.
         </p>
       </Modal>
@@ -314,7 +314,7 @@ export default function Modals({
       >
         <div className="flex flex-col gap-4">
           <p className="text-xs font-medium text-red-600 flex items-center gap-2 select-none">
-            <AlertTriangle size={18} className="flex-shrink-0" />
+            <AlertTriangle size={18} className="shrink-0" />
             Warning: You are rejecting this loan application. An official audit reason must be supplied.
           </p>
 

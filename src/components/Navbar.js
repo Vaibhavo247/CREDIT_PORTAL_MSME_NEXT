@@ -27,7 +27,7 @@ export default function Navbar({ employeeId, role, avatarSrc, collapsed }) {
     <nav id="main-navbar" className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200 z-50 h-16 flex items-center justify-between px-4 md:px-8">
       {/* Left Section: Logo + Text aligned with Sidebar */}
       <div className="flex items-center h-full">
-        <div className={`flex items-center shrink-0 transition-all duration-300 ${collapsed ? "w-[48px]" : "w-[224px]"}`}>
+        <div className={`flex items-center shrink-0 transition-all duration-300 ${collapsed ? "w-12" : "w-56"}`}>
            <img 
               src="/image.png"
               alt="Suryoday Bank"

@@ -68,7 +68,7 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
 
   return (
     <aside
-      className={`fixed top-16 left-0 bottom-0 bg-gradient-to-b from-[#0A2540] via-[#123150] to-[#0A2540] border-r border-[#1E3A5F] text-white flex flex-col z-30 transition-all duration-300 shadow-xl ${
+      className={`fixed top-16 left-0 bottom-0 bg-linear-to-b from-brand-blue via-[#123150] to-brand-blue border-r border-[#1E3A5F] text-white flex flex-col z-30 transition-all duration-300 shadow-xl ${
         collapsed ? "w-20" : "w-64"
       }`}
     >
@@ -95,7 +95,7 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
                 >
                   <Icon
                     size={16}
-                    className={`flex-shrink-0 transition-transform duration-200 group-hover:scale-110 ${
+                    className={`shrink-0 transition-transform duration-200 group-hover:scale-110 ${
                       isActive ? "text-white" : "text-white/70 group-hover:text-white"
                     }`}
                   />

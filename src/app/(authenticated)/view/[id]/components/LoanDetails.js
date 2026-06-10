@@ -14,7 +14,7 @@ export default function LoanDetails({
 }) {
   return (
     <div className="border border-bank-border rounded-2xl overflow-hidden shadow-sm bg-white">
-      <div className="bg-gradient-to-r from-brand-blue to-[#043662] px-6 py-4 select-none">
+      <div className="bg-linear-to-r from-brand-blue to-[#043662] px-6 py-4 select-none">
         <h3 className="text-sm font-bold uppercase tracking-wider text-white">
           Loan Details
         </h3>
