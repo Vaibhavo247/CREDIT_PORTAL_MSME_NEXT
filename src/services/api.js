@@ -3,13 +3,14 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Agent, setGlobalDispatcher } from "undici";
 import crypto from "crypto";
+import https from "https";
 
 if (process.env.NODE_ENV === "development") {
   try {
     setGlobalDispatcher(
       new Agent({
         connect: {
-          rejectUnauthorized: false,
+          rejectUnauthorized: process.env.NODE_ENV === "development" ? false : true,
           secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
         },
       })

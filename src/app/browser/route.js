@@ -12,7 +12,7 @@ export async function GET(request) {
     cookieStore.set("sso_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "strict",
       path: "/",
     });
     return NextResponse.redirect(new URL("/about", request.url));
