@@ -3,7 +3,7 @@ import { DetailsField } from "./SharedComponents";
 
 export default function CustomerDetails({ summary, loadLoanJourney, setIsJourneyOpen }) {
   return (
-    <div className="border border-bank-border rounded-2xl overflow-hidden shadow-sm bg-white">
+    <div className="rounded-2xl overflow-hidden bg-white">
       <div className="bg-linear-to-r from-brand-blue to-[#043662] px-6 py-4 flex items-center justify-between select-none">
         <h3 className="text-sm font-bold uppercase tracking-wider text-white">
           Customer Details
@@ -13,7 +13,7 @@ export default function CustomerDetails({ summary, loadLoanJourney, setIsJourney
             loadLoanJourney();
             setIsJourneyOpen(true);
           }}
-          className="px-3.5 py-1.5 bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-semibold rounded-xl transition shadow-sm cursor-pointer"
+          className="px-3.5 py-1.5 bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-semibold rounded-xl transition cursor-pointer"
         >
           View Loan Journey
         </button>

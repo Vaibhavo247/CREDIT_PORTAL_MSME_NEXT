@@ -56,24 +56,25 @@ export default function Table({
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-sm border border-bank-border overflow-hidden">
+    <div className="w-full bg-white rounded-2xl shadow-sm border border-bank-border overflow-hidden flex-1 flex flex-col">
       {/* Table Container with scroll support */}
       <div className="w-full overflow-x-auto">
         <table className="w-full text-left border-collapse min-w-max">
           <thead>
-            <tr className="bg-gray-100 text-gray-600 text-xs font-semibold uppercase tracking-wider">
+            <tr className="bg-white text-gray-900 text-[13px] font-semibold border-b border-gray-200">
               {columns.map((col, idx) => (
                 <th
                   key={col.key || col.dataIndex || idx}
-                  className={`py-4 px-6 text-sm font-medium ${col.fixed === "left" ? "sticky left-0 bg-gray-100 z-10" : ""} ${col.fixed === "right" ? "sticky right-0 bg-gray-100 z-10" : ""}`}
+                  className="py-2 px-2 first:pl-4 font-medium"
                   style={{ width: col.width ? `${col.width}px` : "auto" }}
+                  title={typeof col.title === "string" ? col.title : undefined}
                 >
                   {col.title}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-bank-border text-sm text-gray-700">
+          <tbody className="divide-y divide-bank-border text-[13px] text-gray-700">
             {loading ? (
               <tr>
                 <td colSpan={columns.length} className="py-12 text-center">
@@ -107,7 +108,9 @@ export default function Table({
                       return (
                         <td
                           key={col.key || col.dataIndex || cIdx}
-                          className={`py-3 px-6 whitespace-nowrap align-middle border-b border-gray-100 ${col.fixed === "left" ? "sticky left-0 bg-white z-10 shadow-[2px_0_5px_rgba(0,0,0,0.02)]" : ""} ${col.fixed === "right" ? "sticky right-0 bg-white z-10 shadow-[-2px_0_5px_rgba(0,0,0,0.02)]" : ""}`}
+                          className="py-2 px-2 align-middle border-b border-gray-100 first:pl-4"
+                          style={{ width: col.width ? `${col.width}px` : "auto" }}
+                          title={typeof rendered === "string" || typeof rendered === "number" ? rendered : undefined}
                         >
                           {rendered !== undefined && rendered !== null ? rendered : "-"}
                         </td>
@@ -123,7 +126,7 @@ export default function Table({
 
       {/* Pagination Controls */}
       {!loading && dataSource.length > 0 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 bg-gray-50 border-t border-bank-border text-sm select-none gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between py-4 bg-white border-t border-gray-100 text-sm select-none gap-4">
           <span className="text-gray-500 font-medium whitespace-nowrap">
             Showing <span className="text-gray-900">{startIndex + 1}</span> to{" "}
             <span className="text-gray-900">

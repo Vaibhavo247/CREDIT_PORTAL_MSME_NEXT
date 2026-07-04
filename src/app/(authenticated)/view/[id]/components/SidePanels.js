@@ -20,14 +20,14 @@ export default function SidePanels({
   return (
     <div className="lg:col-span-4 flex flex-col gap-6 sticky top-24">
       {/* Customer Photo Card */}
-      <div className="border border-bank-border rounded-2xl overflow-hidden shadow-sm bg-white">
+      <div className="rounded-2xl overflow-hidden bg-white">
         <div className="bg-gray-50 border-b border-bank-border px-6 py-4 text-center select-none">
           <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wide">
             Customer Photo
           </h4>
         </div>
         <div className="p-6 flex flex-col items-center gap-4">
-          <div className="w-48 h-48 border border-gray-100 rounded-2xl overflow-hidden flex items-center justify-center bg-gray-50 shadow-inner">
+          <div className="w-48 h-48 rounded-2xl overflow-hidden flex items-center justify-center bg-gray-50">
             {docs?.customer_photo ? (
               <ZoomableImage
                 src={docs.customer_photo}
@@ -63,7 +63,7 @@ export default function SidePanels({
       </div>
 
       {/* Business Images / House Image Card */}
-      <div className="border border-bank-border rounded-2xl overflow-hidden shadow-sm bg-white">
+      <div className="rounded-2xl overflow-hidden bg-white">
         <div className="bg-gray-50 border-b border-bank-border px-6 py-4 text-center select-none">
           <h4 className="text-sm font-bold text-gray-700 uppercase tracking-wide">
             {isNtb ? "House Image" : "Business Images"}
@@ -73,7 +73,7 @@ export default function SidePanels({
         <div className="p-6 flex flex-col items-center gap-4">
           {isNtb ? (
             /* NTBVL single House image */
-            <div className="w-48 h-48 border border-gray-100 rounded-2xl overflow-hidden flex items-center justify-center bg-gray-50 shadow-inner">
+            <div className="w-48 h-48 rounded-2xl overflow-hidden flex items-center justify-center bg-gray-50">
               {houseImage ? (
                 <ZoomableImage
                   src={houseImage}
@@ -92,7 +92,7 @@ export default function SidePanels({
               {businessImagesList.length > 0 ? (
                 <SimpleCarousel images={businessImagesList} />
               ) : (
-                <div className="h-48 flex items-center justify-center text-xs text-gray-400 font-medium border border-gray-100 rounded-2xl bg-gray-50 shadow-inner">
+                <div className="h-48 flex items-center justify-center text-xs text-gray-400 font-medium rounded-2xl bg-gray-50">
                   No business images available
                 </div>
               )}
@@ -144,48 +144,6 @@ export default function SidePanels({
         </div>
       </div>
 
-      {/* Workflow Action Panel (CREDIT ONLY) */}
-      {userRole === "CREDIT" && summary.credit_status?.toLowerCase() !== "approved" && summary.loan_status?.toLowerCase() !== "disbursed" && summary.loan_status?.toLowerCase() !== "rejected" && (
-        <div className="border border-bank-border rounded-2xl overflow-hidden shadow-sm bg-white p-6 flex flex-col gap-3">
-          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 select-none">
-            Workflow Actions
-          </h4>
-
-          <Button
-            variant="primary"
-            disabled={!isNtb && !isBusinessDetailsChecked}
-            className="w-full bg-brand-orange hover:bg-orange-600 shadow-md shadow-brand-orange/20"
-            onClick={() => setIsApproveConfirmOpen(true)}
-          >
-            <CheckCircle size={18} className="mr-2" />
-            Approve Case
-          </Button>
-
-          <Button
-            variant="primary"
-            className="w-full bg-brand-blue hover:bg-blue-800 shadow-md shadow-brand-blue/20"
-            onClick={() => setIsPendingConfirmOpen(true)}
-          >
-            <Clock size={18} className="mr-2" />
-            Mark as Pending
-          </Button>
-
-          <Button
-            variant="danger"
-            className="w-full"
-            onClick={() => setIsRejectConfirmOpen(true)}
-          >
-            <XCircle size={18} className="mr-2" />
-            Reject Case
-          </Button>
-
-          {!isNtb && !isBusinessDetailsChecked && (
-            <div className="text-[10px] text-amber-600 text-center font-medium mt-1 leading-normal">
-              * Verify the mobile checkbox in Business Details to enable Approve.
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

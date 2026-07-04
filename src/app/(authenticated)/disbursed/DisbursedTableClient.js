@@ -162,7 +162,7 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
 
   const columns = [
     {
-      title: "Application ID",
+      title: "App ID",
       dataIndex: "application_id",
       fixed: "left",
       width: 140,
@@ -173,7 +173,7 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
       width: 100,
     },
     {
-      title: "Full Name",
+      title: "Name",
       dataIndex: "full_name",
       width: 140,
     },
@@ -185,28 +185,28 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
       render: (date) => date ? dayjs(date).format('YYYY-MM-DD') : "-",
     },
     {
-      title: "LOAN STATUS",
+      title: "STATUS",
       dataIndex: "loan_status",
       width: 110,
     },
     {
-      title: "Mobile number",
+      title: "Mobile",
       dataIndex: "mobile_no",
       width: 130,
     },
     {
-      title: "Business name",
+      title: "Business",
       dataIndex: "udyam_name",
       width: 150,
     },
     {
-      title: "LOAN AMOUNT",
+      title: "AMOUNT",
       dataIndex: "final_loan_amount",
       width: 120,
       render: (amount) => amount ? `₹${amount}` : '-',
     },
     {
-      title: "RAG STATUS",
+      title: "RAG",
       dataIndex: "rag_status",
       width: 110,
       render: (status) => {
@@ -233,26 +233,22 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
   ];
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 relative">
-      <PageHeader title={title} showBack={false}>
-        <Input
-          placeholder="Search App ID or Name..."
-          value={searchText}
-          onChange={(e) => {
-            const value = e.target.value;
-            const isValid = /^[a-zA-Z0-9]*$/.test(value);
-            if (isValid) handleSearch(value);
-          }}
-          wrapperClassName="w-64"
-        />
-        <Button variant="primary" onClick={exportToExcel}>
-          Export Excel
-        </Button>
-      </PageHeader>
+    <div className="flex flex-col h-full bg-white relative">
+      <PageHeader title={title} showBack={false} />
 
-      <div className="p-4 sm:p-6 lg:p-8 flex-1 overflow-auto">
-        {/* Custom Disbursed Filters */}
-        <Card className="mb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+      <div className="flex-1 flex flex-col overflow-auto">
+        {/* Search & Filters */}
+        <div className="py-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 shrink-0">
+          <Input
+            placeholder="Search App ID or Name..."
+            value={searchText}
+            onChange={(e) => {
+              const value = e.target.value;
+              const isValid = /^[a-zA-Z0-9]*$/.test(value);
+              if (isValid) handleSearch(value);
+            }}
+            wrapperClassName="w-64 md:mb-0 mb-4"
+          />
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 w-full md:w-auto">
             <div className="w-full sm:w-64">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 ml-1">Loan Amount Range</label>
@@ -283,15 +279,24 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
               wrapperClassName="w-full sm:w-40"
             />
           </div>
-        </Card>
+        </div>
 
-        {/* High Fidelity Table */}
+      {/* High Fidelity Table */}
       <Table
         columns={columns}
         dataSource={filteredData}
         rowKey={(row) => row.msme_identifier || row.msmeIdentifier || row.application_id}
         loading={loading}
       />
+      
+      {/* Export Action */}
+      {!loading && filteredData.length > 0 && (
+        <div className="py-4 flex justify-end shrink-0 border-t border-gray-100 bg-white">
+          <Button variant="outline" size="sm" onClick={exportToExcel}>
+            Export Excel
+          </Button>
+        </div>
+      )}
 
       {/* Full Screen Loading Overlay for Navigation */}
       {loading && !warningModal.isOpen && (

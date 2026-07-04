@@ -150,13 +150,13 @@ export default function FiReportClient({ initialData = [] }) {
 
   const columns = [
     {
-      title: "Application ID",
+      title: "App ID",
       width: 150,
       dataIndex: "application_id",
       fixed: "left",
     },
     {
-      title: "Full Name",
+      title: "Name",
       width: 200,
       dataIndex: "full_name",
     },
@@ -172,17 +172,17 @@ export default function FiReportClient({ initialData = [] }) {
       },
     },
     {
-      title: "Mobile Number",
+      title: "Mobile",
       width: 150,
       dataIndex: "mobile_no",
     },
     {
-      title: "Business Name",
+      title: "Business",
       width: 200,
       dataIndex: "udyam_name",
     },
     {
-      title: "Business Address",
+      title: "Address",
       width: 300,
       dataIndex: "business_address",
     },
@@ -197,12 +197,12 @@ export default function FiReportClient({ initialData = [] }) {
       dataIndex: "business_pincode",
     },
     {
-      title: "Latitude",
+      title: "Lat",
       width: 120,
       dataIndex: "latitude",
     },
     {
-      title: "Longitude",
+      title: "Long",
       width: 120,
       dataIndex: "longitude",
     },
@@ -222,11 +222,11 @@ export default function FiReportClient({ initialData = [] }) {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 relative">
-      <PageHeader title="FI Report" showBack={false} />
+    <div className="flex flex-col h-full bg-white relative">
+      <PageHeader title="FI Report" showBack={false} className="border-b border-gray-200" />
       
-      <div className="p-4 sm:p-6 lg:p-8 flex-1 overflow-auto">
-        <Card className="mb-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+      <div className="flex-1 flex flex-col overflow-auto">
+        <div className="py-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 shrink-0">
           
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 w-full md:w-auto">
             <Input 
@@ -257,17 +257,7 @@ export default function FiReportClient({ initialData = [] }) {
               Reset
             </Button>
           </div>
-
-          <Button
-            variant="primary"
-            onClick={exportToExcel}
-            disabled={filteredData.length === 0}
-            className="w-full md:w-auto"
-          >
-            <Download size={18} />
-            Export Excel
-          </Button>
-        </Card>
+        </div>
 
         <Table
           columns={columns}
@@ -277,6 +267,19 @@ export default function FiReportClient({ initialData = [] }) {
           loading={loading}
           emptyText="No FI reports found"
         />
+
+        {/* Export Action */}
+        {!loading && filteredData.length > 0 && (
+          <div className="py-4 flex justify-end shrink-0 border-t border-gray-100 bg-white">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={exportToExcel}
+            >
+              Export to Excel
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

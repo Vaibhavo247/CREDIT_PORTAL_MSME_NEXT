@@ -54,17 +54,17 @@ export default function MsmeLeadClient({ initialData = [] }) {
       width: 150,
     },
     {
-      title: "Lead Number",
+      title: "Lead No",
       dataIndex: "lead_number",
       width: 150,
       fixed: "left",
     },
     {
-      title: "Business Name",
+      title: "Business",
       dataIndex: "business_name",
     },
     {
-      title: "Mobile Number",
+      title: "Mobile",
       dataIndex: "phone_number",
     },
     {
@@ -72,15 +72,15 @@ export default function MsmeLeadClient({ initialData = [] }) {
       dataIndex: "remarks",
     },
     {
-      title: "Latitude",
+      title: "Lat",
       dataIndex: "lat",
     },
     {
-      title: "Longitude",
+      title: "Long",
       dataIndex: "long",
     },
     {
-      title: "Shop Image",
+      title: "Shop Img",
       key: "operation",
       fixed: "right",
       width: 120,
@@ -101,10 +101,10 @@ export default function MsmeLeadClient({ initialData = [] }) {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 relative">
-      <PageHeader title="MSME Lead" showBack={false} />
-      <div className="p-4 sm:p-6 lg:p-8 flex-1 overflow-auto">
-        <Card className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="flex flex-col h-full bg-white relative">
+      <PageHeader title="MSME Lead" showBack={false} className="border-b border-gray-200" />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <div className="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
           <div className="relative w-full sm:w-80">
             <Search
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"
@@ -118,7 +118,7 @@ export default function MsmeLeadClient({ initialData = [] }) {
               className="pl-10"
             />
           </div>
-        </Card>
+        </div>
 
         <Table
           columns={columns}

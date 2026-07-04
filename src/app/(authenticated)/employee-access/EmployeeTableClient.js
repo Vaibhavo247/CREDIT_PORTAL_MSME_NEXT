@@ -90,7 +90,7 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
 
   const columns = [
     {
-      title: "Employee ID",
+      title: "Emp ID",
       dataIndex: "EmployeeId",
       fixed: "left",
       width: 120,
@@ -116,12 +116,12 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
       width: 120,
     },
     {
-      title: "Business Vertical",
+      title: "Vertical",
       dataIndex: "BusinessVertical",
       width: 150,
     },
     {
-      title: "Reporting Manager",
+      title: "Manager",
       width: 200,
       render: (_, record) => (
         <div className="flex flex-col">
@@ -171,35 +171,37 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
   ];
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-brand-orange uppercase">
-          EMPLOYEE LIST
-        </h1>
-        
-        <div className="flex items-center gap-3 self-end md:self-auto">
-          <Button
-            variant="success"
-            onClick={handleExportToExcel}
-          >
-            Export to Excel
-          </Button>
-          
+    <div className="flex flex-col h-full bg-white relative">
+      <PageHeader title="EMPLOYEE LIST" />
+      
+      <div className="flex-1 flex flex-col overflow-auto">
+      
+        {/* Search Toolbar */}
+        <div className="py-4 flex shrink-0">
           <input
-            type="text"
-            placeholder="Search employees..."
-            value={searchText}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="px-4 py-2 border border-bank-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange w-64 bg-gray-50/50"
+              type="text"
+              placeholder="Search employees..."
+              value={searchText}
+              onChange={(e) => handleSearch(e.target.value)}
+              className="px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange w-full sm:w-80 bg-white"
           />
         </div>
-      </div>
 
       <Table
         columns={columns}
         dataSource={filteredEmployees}
         rowKey={(row) => row.EmployeeId}
       />
+
+      {/* Export Action */}
+      {filteredEmployees.length > 0 && (
+        <div className="py-4 flex justify-end shrink-0 border-t border-gray-100 bg-white">
+          <Button variant="outline" size="sm" onClick={handleExportToExcel}>
+            Export to Excel
+          </Button>
+        </div>
+      )}
+      </div>
     </div>
   );
 }

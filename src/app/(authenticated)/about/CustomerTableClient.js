@@ -125,7 +125,7 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
       width: 100,
     },
     {
-      title: "Credit Recieve date",
+      title: "Credit Date",
       dataIndex: "bre_executed_time",
       width: 160,
     },
@@ -136,28 +136,28 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
       width: 140,
     },
     {
-      title: "Application ID",
+      title: "App ID",
       dataIndex: "application_id",
       fixed: "left",
       width: 160,
     },
     {
-      title: "Full Name",
+      title: "Name",
       dataIndex: "full_name",
       width: 180,
     },
     {
-      title: "Business name",
+      title: "Business",
       dataIndex: "udyam_name",
       width: 200,
     },
     {
-      title: "Mobile number",
+      title: "Mobile",
       dataIndex: "mobile_no",
       width: 140,
     },
     {
-      title: "Pan number",
+      title: "PAN",
       dataIndex: "pan_no",
       width: 140,
     },
@@ -172,7 +172,7 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
       width: 120,
     },
     {
-      title: "Date of Udyam Registration",
+      title: "Udyam Date",
       dataIndex: "udyam_incorp_date",
       width: 180,
     },
@@ -211,23 +211,25 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
   ];
 
   return (
-    <div className="flex flex-col gap-6">
-      <PageHeader title={title}>
-        <Button variant="success" onClick={handleExportToExcel}>
-          Export to Excel
-        </Button>
-        
-        <Input
-          placeholder="Search by ID or Name"
-          value={searchText}
-          onChange={(e) => {
-            const value = e.target.value;
-            const isValid = /^[a-zA-Z0-9 ]*$/.test(value);
-            if (isValid) handleSearch(value);
-          }}
-          className="pl-10 w-full"
-        />
-      </PageHeader>
+    <div className="flex flex-col h-full bg-white relative">
+      <PageHeader title={title} className="border-b border-gray-200" />
+
+      <div className="flex-1 flex flex-col overflow-auto">
+      
+        {/* Search Toolbar */}
+        <div className="py-4 flex shrink-0">
+          <Input
+            placeholder="Search by ID or Name"
+            value={searchText}
+            onChange={(e) => {
+              const value = e.target.value;
+              const isValid = /^[a-zA-Z0-9 ]*$/.test(value);
+              if (isValid) handleSearch(value);
+            }}
+            className="pl-10 w-full"
+            wrapperClassName="w-full sm:w-80"
+          />
+        </div>
 
       {/* High Fidelity Table */}
         <Table 
@@ -236,6 +238,16 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
           rowKey={(item) => item.msme_identifier || item.application_id || Math.random()}
           emptyText="No active applications found"
         />
+
+        {/* Export Action */}
+        {!loading && filteredData.length > 0 && (
+          <div className="py-4 flex justify-end shrink-0 border-t border-gray-100 bg-white">
+            <Button variant="outline" size="sm" onClick={handleExportToExcel}>
+              Export to Excel
+            </Button>
+          </div>
+        )}
+      </div>
 
       {/* Full Screen Loading Overlay for Navigation */}
       {loading && !warningModal.isOpen && (

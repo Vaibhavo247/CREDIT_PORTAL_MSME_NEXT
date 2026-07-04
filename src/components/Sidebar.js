@@ -69,7 +69,7 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
 
   return (
     <aside
-      className={`fixed top-16 left-0 bottom-0 bg-linear-to-b from-brand-blue via-[#123150] to-brand-blue border-r border-[#1E3A5F] text-white flex flex-col z-30 transition-all duration-300 shadow-xl ${
+      className={`fixed top-16 left-0 bottom-0 bg-white border-r border-gray-200 flex flex-col z-30 transition-all duration-300 ${
         collapsed ? "w-20" : "w-64"
       }`}
     >
@@ -90,14 +90,14 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
                   href={item.href}
                   className={`flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-200 group relative ${
                     isActive
-                      ? "bg-brand-orange text-white font-medium shadow-md shadow-brand-orange/20"
-                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                      ? "bg-brand-orange/10 text-brand-orange font-medium"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-brand-orange"
                   }`}
                 >
                   <Icon
                     size={16}
                     className={`shrink-0 transition-transform duration-200 group-hover:scale-110 ${
-                      isActive ? "text-white" : "text-white/70 group-hover:text-white"
+                      isActive ? "text-brand-orange" : "text-gray-400 group-hover:text-brand-orange"
                     }`}
                   />
                   {!collapsed && (

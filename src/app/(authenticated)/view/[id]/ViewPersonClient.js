@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, FileText, Download, Upload, Eye, CheckCircle, AlertTriangle, AlertCircle, RefreshCw } from "lucide-react";
+import { ChevronLeft, FileText, Download, Upload, Eye, CheckCircle, AlertTriangle, AlertCircle, RefreshCw, XCircle, Clock } from "lucide-react";
 import toast from "react-hot-toast";
 import Modal from "@/components/ui/Modal";
+import Button from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
 import {
   approveCase,
@@ -504,6 +505,42 @@ export default function ViewPersonClient({
           setIsRejectConfirmOpen={setIsRejectConfirmOpen}
         />
       </div>
+
+      
+      {/* Workflow Action Horizontal Footer (CREDIT ONLY) */}
+      {userRole === "CREDIT" && summary.credit_status?.toLowerCase() !== "approved" && summary.loan_status?.toLowerCase() !== "disbursed" && summary.loan_status?.toLowerCase() !== "rejected" && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-6 py-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:left-64 flex flex-col sm:flex-row items-center justify-end gap-4 transition-all duration-300">
+          <div className="mr-auto hidden sm:block"></div>
+
+          <Button
+            variant="primary"
+            disabled={!isNtb && !isBusinessDetailsChecked}
+            className="px-8 py-2 bg-green-600 hover:bg-green-700 border-green-600 text-white w-full sm:w-auto font-semibold"
+            onClick={() => setIsApproveConfirmOpen(true)}
+          >
+            <CheckCircle size={18} className="mr-2" />
+            Approve Case
+          </Button>
+
+          <Button
+            variant="outline"
+            className="px-6 py-2 text-brand-blue border-brand-blue hover:bg-blue-50 w-full sm:w-auto"
+            onClick={() => setIsPendingConfirmOpen(true)}
+          >
+            <Clock size={18} className="mr-2" />
+            Mark as Pending
+          </Button>
+
+          <Button
+            variant="outline"
+            className="px-6 py-2 text-red-600 border-red-200 hover:bg-red-50 w-full sm:w-auto"
+            onClick={() => setIsRejectConfirmOpen(true)}
+          >
+            <XCircle size={18} className="mr-2" />
+            Reject Case
+          </Button>
+        </div>
+      )}
 
       <Modals
         isJourneyOpen={isJourneyOpen}

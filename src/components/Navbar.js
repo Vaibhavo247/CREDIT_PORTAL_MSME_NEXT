@@ -37,7 +37,7 @@ export default function Navbar({ employeeId, role, avatarSrc, collapsed }) {
         
         {/* Plain Text, aligned slightly right of where the sidebar ends */}
         <div className="text-sm md:text-base flex flex-col font-bold text-brand-blue tracking-wide pointer-events-none ml-4 md:ml-8">
-          <span className="hidden md:inline">SURYODAY BANK OF SMILES</span>
+          {/* <span className="hidden md:inline">SURYODAY BANK OF SMILES</span> */}
           <span className="sm:hidden text-brand-orange">SDB</span>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function Navbar({ employeeId, role, avatarSrc, collapsed }) {
               </div>
             )}
             <div className="hidden sm:flex flex-col items-start pr-2">
-              <p className="text-xs font-bold text-gray-800">{employeeId}</p>
+              <p className="text-[13px] font-bold text-gray-800">{employeeId}</p>
               <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{role}</p>
             </div>
           </button>
@@ -77,7 +77,7 @@ export default function Navbar({ employeeId, role, avatarSrc, collapsed }) {
               ></div>
               <div className="absolute right-0 mt-2 w-48 bg-slate-800 rounded-lg shadow-xl border border-slate-700 overflow-hidden z-50">
                 <div className="px-4 py-3 border-b border-slate-700 bg-slate-900/50">
-                  <p className="text-sm font-semibold text-white">{employeeId}</p>
+                  <p className="text-[13px] font-semibold text-white">{employeeId}</p>
                   <p className="text-xs text-slate-400 uppercase tracking-wider">{role}</p>
                 </div>
                 <button

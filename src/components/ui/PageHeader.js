@@ -6,7 +6,7 @@ export default function PageHeader({ title, children, showBack = false }) {
   const router = useRouter();
 
   return (
-    <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full bg-white px-6 py-4 border-b border-bank-border shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] sticky top-0 z-20">
+    <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full bg-white py-4 mb-2 border-b border-gray-200 z-10">
       <div className="flex items-center gap-3">
         {showBack && (
           <button 

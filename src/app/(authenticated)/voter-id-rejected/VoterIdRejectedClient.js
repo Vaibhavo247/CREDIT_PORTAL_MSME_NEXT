@@ -15,12 +15,12 @@ export default function VoterIdRejectedClient({ initialData = [], title = "" }) 
   );
 
   const columns = [
-    { title: "Application ID", dataIndex: "application_id" },
+    { title: "App ID", dataIndex: "application_id" },
     { title: "Aadhaar Full Name", dataIndex: "full_name" },
     { title: "VoterID Full Name", dataIndex: "voter_id_name" },
     { title: "Aadhaar NO", dataIndex: "aadhar_no" },
     { title: "Voter ID", dataIndex: "voter_id" },
-    { title: "Mobile Number", dataIndex: "mobile_no" },
+    { title: "Mobile", dataIndex: "mobile_no" },
     { title: "VoterID Comment", dataIndex: "under_review_remark" },
     { title: "Vertical", dataIndex: "BusinessVertical" },
     { title: "PAN Number", dataIndex: "pan_no" },
@@ -34,10 +34,10 @@ export default function VoterIdRejectedClient({ initialData = [], title = "" }) 
   ];
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 relative">
-      <PageHeader title={title} showBack={true} />
-      <div className="p-4 sm:p-6 lg:p-8 flex-1 overflow-auto">
-        <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="flex flex-col h-full bg-white relative">
+      <PageHeader title={title} showBack={false} className="border-b border-gray-200" />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <div className="py-4 flex flex-col sm:flex-row justify-end items-center shrink-0">
           <div className="relative w-full sm:w-80">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <Input
@@ -49,7 +49,7 @@ export default function VoterIdRejectedClient({ initialData = [], title = "" }) 
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white flex-1 overflow-hidden">
           <Table 
             columns={columns} 
             dataSource={filteredData} 

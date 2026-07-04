@@ -238,7 +238,7 @@ function AddEmployeeForm() {
           <div className="flex border-b border-gray-100">
             <button
               onClick={() => setActiveTab("single")}
-              className={`px-6 py-4 text-sm font-semibold transition select-none outline-none ${
+              className={`py-4 text-sm font-semibold transition select-none outline-none ${
                 activeTab === "single"
                   ? "text-brand-blue border-b-2 border-brand-orange bg-brand-blue/5"
                   : "text-gray-500 hover:bg-gray-50"
@@ -248,7 +248,7 @@ function AddEmployeeForm() {
             </button>
             <button
               onClick={() => setActiveTab("bulk")}
-              className={`px-6 py-4 text-sm font-semibold transition select-none outline-none ${
+              className={`py-4 text-sm font-semibold transition select-none outline-none ${
                 activeTab === "bulk"
                   ? "text-brand-blue border-b-2 border-brand-orange bg-brand-blue/5"
                   : "text-gray-500 hover:bg-gray-50"
