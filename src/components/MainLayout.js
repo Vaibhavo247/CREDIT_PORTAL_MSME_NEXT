@@ -8,7 +8,7 @@ export default function MainLayout({ children, userId, userRole }) {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen flex bg-bank-bg pt-16 w-full overflow-hidden">
+    <div className="min-h-screen flex bg-white pt-16 w-full overflow-hidden">
       <Navbar employeeId={userId} role={userRole} collapsed={collapsed} />
       
       {/* Collapsible Sidebar */}
@@ -26,10 +26,8 @@ export default function MainLayout({ children, userId, userRole }) {
 
 
         {/* Content Body */}
-        <main id="main-content" className="flex-1 p-4 md:p-8 animate-fade-in text-[13px] text-gray-700 overflow-x-hidden min-w-0">
-          <div className="bg-white rounded-2xl border border-bank-border shadow-sm p-4 md:p-6 min-h-[calc(100vh-8.5rem)] overflow-x-auto w-full">
-            {children}
-          </div>
+        <main id="main-content" className="flex-1 p-6 md:p-10 animate-fade-in text-[13px] text-gray-700 overflow-x-hidden min-w-0">
+          {children}
         </main>
       </div>
     </div>
