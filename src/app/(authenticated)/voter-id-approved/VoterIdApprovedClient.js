@@ -34,20 +34,25 @@ export default function VoterIdApprovedClient({ initialData = [], title = "" }) 
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white relative">
-      <PageHeader title={title} showBack={false} className="border-b border-gray-200" />
-      <div className="flex-1 flex flex-col overflow-auto">
-        <div className="py-4 flex flex-col sm:flex-row justify-end items-center shrink-0">
-          <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <Input
-              placeholder="Search by ID or Name"
-              value={searchText}
-              onChange={(e) => handleSearch(e.target.value)}
-              className="pl-10 w-full"
-            />
+    <div className="page-container bg-white relative h-full">
+      <PageHeader title={title} showBack={false} className="border-b border-gray-200" >
+
+        <div className="relative w-full md:w-80">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search size={18} className="text-gray-400" />
           </div>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search by ID or Name"
+            value={searchText}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
+
+</PageHeader>
+      <div className="flex-1 flex flex-col overflow-auto">
+
 
         <div className="bg-white flex-1 overflow-hidden">
           <Table 

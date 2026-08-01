@@ -171,21 +171,23 @@ export default function EmployeeTableClient({ initialEmployees = [] }) {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white relative">
-      <PageHeader title="EMPLOYEE LIST" />
-      
-      <div className="flex-1 flex flex-col overflow-auto">
-      
-        {/* Search Toolbar */}
-        <div className="py-4 flex shrink-0">
+    <div className="page-container bg-white relative h-full">
+      <PageHeader title="EMPLOYEE LIST">
+        <div className="relative w-full md:w-80">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search size={18} className="text-gray-400" />
+          </div>
           <input
-              type="text"
-              placeholder="Search employees..."
-              value={searchText}
-              onChange={(e) => handleSearch(e.target.value)}
-              className="px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange w-full sm:w-80 bg-white"
+            type="text"
+            className="search-input"
+            placeholder="Search employees..."
+            value={searchText}
+            onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
+      </PageHeader>
+      
+      <div className="flex-1 flex flex-col overflow-auto">
 
       <Table
         columns={columns}

@@ -178,14 +178,14 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
       width: 140,
     },
     {
-      title: "DATE",
+      title: "Date",
       dataIndex: "created_on",
       fixed: "left",
       width: 120,
       render: (date) => date ? dayjs(date).format('YYYY-MM-DD') : "-",
     },
     {
-      title: "STATUS",
+      title: "Status",
       dataIndex: "loan_status",
       width: 110,
     },
@@ -200,13 +200,13 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
       width: 150,
     },
     {
-      title: "AMOUNT",
+      title: "Amount",
       dataIndex: "final_loan_amount",
       width: 120,
       render: (amount) => amount ? `₹${amount}` : '-',
     },
     {
-      title: "RAG",
+      title: "Rag",
       dataIndex: "rag_status",
       width: 110,
       render: (status) => {
@@ -215,7 +215,7 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
       }
     },
     {
-      title: "VIEW",
+      title: "View",
       fixed: "right",
       width: 100,
       render: (_, record) => {
@@ -233,7 +233,7 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white relative">
+    <div className="page-container bg-white relative h-full">
       <PageHeader title={title} showBack={false} />
 
       <div className="flex-1 flex flex-col overflow-auto">
@@ -251,11 +251,11 @@ export default function DisbursedTableClient({ initialData = [], title = "DISBUR
           />
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 w-full md:w-auto">
             <div className="w-full sm:w-64">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 ml-1">Loan Amount Range</label>
+              <label className="form-label mb-1.5 ml-1">Loan Amount Range</label>
               <select 
                 value={selectedRange} 
                 onChange={(e) => setSelectedRange(e.target.value)}
-                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all"
+                className="form-select w-full bg-gray-50"
               >
                 {loanAmountRanges.map((range) => (
                   <option key={range.value} value={range.value}>{range.label}</option>

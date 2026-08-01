@@ -109,7 +109,13 @@ export async function serverFetch(endpoint, options = {}) {
       let errorMessage = `Unexpected server error (${res.status}).`;
       
       if (res.status === 401 || res.status === 403) {
-        redirect("/browser?message=Session expired. Please log in again.");
+        const cookieStore = await cookies();
+        const devBypass = process.env.NODE_ENV === "development" && cookieStore.get("DEV_BYPASS")?.value === "true";
+        if (devBypass) {
+          errorMessage = "API Unauthorized (Dev Bypass Active). Backend requires real SSO token.";
+        } else {
+          redirect("/browser?message=Session expired. Please log in again.");
+        }
       } else if (res.status >= 500) {
         errorMessage = "The bank's server is currently unresponsive. Please try again later.";
       } else if (res.status === 404) {

@@ -422,7 +422,7 @@ export default function ViewPersonClient({
   const distinctApps100m = customerData.NEARBY_APP_COUNT;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="page-container">
       {/* Page Header */}
       <div className="flex items-center justify-between border-b border-gray-100 pb-4">
         <button

@@ -224,3 +224,18 @@ export const fetchPdfDataAction = async (msmeId, appId) => actionWrapper("fetchP
   };
 });
 
+
+// Mock API Action for Audio Transactions Dashboard
+export const fetchAudioTransactions = async () => actionWrapper("fetchAudioTransactions", async () => {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 800));
+  
+  // Return mocked data representing audio completed transactions
+  return [
+    { id: "AUD-1001", application_id: "APP-50921-A", date: "2026-07-16T10:30:00Z", duration: "12m 45s", agent: "Sarah Jenkins" },
+    { id: "AUD-1002", application_id: "APP-50944-B", date: "2026-07-16T11:15:00Z", duration: "05m 12s", agent: "Mike Ross" },
+    { id: "AUD-1003", application_id: "APP-50988-A", date: "2026-07-17T09:45:00Z", duration: "18m 05s", agent: "Sarah Jenkins" },
+    { id: "AUD-1004", application_id: "APP-51002-C", date: "2026-07-17T14:20:00Z", duration: "08m 30s", agent: "Harvey Specter" },
+    { id: "AUD-1005", application_id: "APP-51015-A", date: "2026-07-18T08:10:00Z", duration: "14m 50s", agent: "Mike Ross" },
+  ];
+});

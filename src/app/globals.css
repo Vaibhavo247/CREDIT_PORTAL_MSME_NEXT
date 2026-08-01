@@ -9,19 +9,21 @@
   --color-bank-card: #FFFFFF;
   --color-bank-border: #E2E8F0; /* Slate-200 border */
   
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-krub), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-krub), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --background: #F8FAFC;
   --foreground: #0F172A; /* Slate-900 for ultra-premium text contrast */
+  font-size: 106.25%; /* Scales base 16px -> 17px to compensate for Krub's smaller optical x-height */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   min-height: 100vh;
+  font-weight: 500; /* Medium font-weight standard for Krub readability */
 }
 
 /* Custom Scrollbar Styles for Premium Feel */
@@ -66,4 +68,62 @@ body {
 .hover-scale:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* Global Table Formatting */
+.table-header-cell {
+  @apply py-4 px-6 text-xs font-bold text-black capitalize tracking-wider whitespace-nowrap min-w-[160px];
+}
+
+/* --- Semantic Refactoring Classes --- */
+
+/* Layout & Containers */
+.page-container {
+  @apply flex flex-col gap-6;
+}
+
+.card-container {
+  @apply bg-white rounded-2xl border border-bank-border shadow-sm overflow-hidden;
+}
+
+/* Forms */
+.form-group {
+  @apply flex flex-col gap-2;
+}
+
+.form-label {
+  @apply text-sm font-bold text-gray-700;
+}
+
+.form-input {
+  @apply px-4 py-2 text-sm font-medium border border-bank-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange disabled:bg-gray-100 disabled:text-gray-500;
+}
+
+.form-select {
+  @apply px-4 py-2 text-sm font-medium border border-bank-border rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange disabled:bg-gray-100 disabled:text-gray-500;
+}
+
+.search-input {
+  @apply block w-full pl-11 pr-4 py-2.5 bg-white border border-gray-200 rounded-2xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all;
+}
+
+/* Badges */
+.badge-success {
+  @apply px-2.5 py-1 text-[10px] font-bold rounded-lg uppercase tracking-wide inline-flex items-center justify-center bg-emerald-100 text-emerald-700;
+}
+
+.badge-error {
+  @apply px-2.5 py-1 text-[10px] font-bold rounded-lg uppercase tracking-wide inline-flex items-center justify-center bg-red-100 text-red-700;
+}
+
+.badge-warning {
+  @apply px-2.5 py-1 text-[10px] font-bold rounded-lg uppercase tracking-wide inline-flex items-center justify-center bg-amber-100 text-amber-700;
+}
+
+.badge-info {
+  @apply px-2.5 py-1 text-[10px] font-bold rounded-lg uppercase tracking-wide inline-flex items-center justify-center bg-blue-100 text-blue-700;
+}
+
+.badge-neutral {
+  @apply px-2.5 py-1 text-[10px] font-bold rounded-lg uppercase tracking-wide inline-flex items-center justify-center bg-gray-100 text-gray-600;
 }

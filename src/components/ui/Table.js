@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Inbox } from "lucide-react";
 import Spinner from "./Spinner";
 
 export default function Table({
@@ -56,16 +57,16 @@ export default function Table({
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-sm border border-bank-border overflow-hidden flex-1 flex flex-col">
+    <div className={`w-full glass-panel rounded-none overflow-hidden shadow-sm flex-1 flex flex-col ${className}`}>
       {/* Table Container with scroll support */}
-      <div className="w-full overflow-x-auto">
+      <div className="w-full overflow-x-auto flex-1 min-h-[55vh]">
         <table className="w-full text-left border-collapse min-w-max">
           <thead>
-            <tr className="bg-white text-gray-900 text-[13px] font-semibold border-b border-gray-200">
+            <tr className="bg-gray-50/80 border-b border-bank-border">
               {columns.map((col, idx) => (
                 <th
                   key={col.key || col.dataIndex || idx}
-                  className="py-2 px-2 first:pl-4 font-medium"
+                  className="table-header-cell"
                   style={{ width: col.width ? `${col.width}px` : "auto" }}
                   title={typeof col.title === "string" ? col.title : undefined}
                 >
@@ -74,32 +75,14 @@ export default function Table({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-bank-border text-[13px] text-gray-700">
-            {loading ? (
-              <tr>
-                <td colSpan={columns.length} className="py-12 text-center">
-                  <div className="flex justify-center items-center gap-2">
-                    <Spinner size="medium" />
-                    <span>Loading details...</span>
-                  </div>
-                </td>
-              </tr>
-            ) : currentData.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={columns.length}
-                  className="py-12 text-center text-gray-400 font-medium"
-                >
-                  {emptyText}
-                </td>
-              </tr>
-            ) : (
+          <tbody className="divide-y divide-bank-border">
+            {!loading && currentData.length > 0 && (
               currentData.map((record, rIdx) => {
                 const key = typeof rowKey === "function" ? rowKey(record) : record[rowKey];
                 return (
                   <tr
                     key={key || rIdx}
-                    className="transition-colors duration-150 group hover:bg-orange-50/40"
+                    className="hover:bg-blue-50/30 transition-colors duration-150 group bg-white/50"
                   >
                     {columns.map((col, cIdx) => {
                       const value = col.dataIndex ? record[col.dataIndex] : undefined;
@@ -108,7 +91,7 @@ export default function Table({
                       return (
                         <td
                           key={col.key || col.dataIndex || cIdx}
-                          className="py-2 px-2 align-middle border-b border-gray-100 first:pl-4"
+                          className="py-4 px-6 text-sm font-medium text-black whitespace-nowrap"
                           style={{ width: col.width ? `${col.width}px` : "auto" }}
                           title={typeof rendered === "string" || typeof rendered === "number" ? rendered : undefined}
                         >
@@ -124,21 +107,39 @@ export default function Table({
         </table>
       </div>
 
+      {/* Loading State (Centered Outside Scroll Area) */}
+      {loading && (
+        <div className="w-full py-12 flex justify-center items-center gap-2 bg-white/50 border-b border-bank-border">
+          <Spinner size="medium" />
+          <span className="text-sm font-medium text-gray-600">Loading details...</span>
+        </div>
+      )}
+
+      {/* Empty State (Centered Outside Scroll Area) */}
+      {!loading && currentData.length === 0 && (
+        <div className="w-full py-12 flex flex-col items-center justify-center text-gray-400 gap-2 bg-white/50 border-b border-bank-border">
+          <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center shadow-sm border border-gray-100">
+            <Inbox className="w-6 h-6 text-gray-300" strokeWidth={1.5} />
+          </div>
+          <span className="text-sm font-medium mt-1">{emptyText}</span>
+        </div>
+      )}
+
       {/* Pagination Controls */}
       {!loading && dataSource.length > 0 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between py-4 bg-white border-t border-gray-100 text-sm select-none gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between py-4 px-6 bg-white/60 backdrop-blur-md border-t border-gray-100 text-sm select-none gap-4">
           <span className="text-gray-500 font-medium whitespace-nowrap">
-            Showing <span className="text-gray-900">{startIndex + 1}</span> to{" "}
-            <span className="text-gray-900">
+            Showing <span className="text-brand-blue font-bold">{startIndex + 1}</span> to{" "}
+            <span className="text-brand-blue font-bold">
               {Math.min(endIndex, dataSource.length)}
             </span>{" "}
-            of <span className="text-gray-900">{dataSource.length}</span> records
+            of <span className="text-brand-blue font-bold">{dataSource.length}</span> records
           </span>
           <div className="flex items-center gap-1 sm:gap-2 flex-wrap justify-center">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-2 sm:px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer"
+              className="px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-brand-blue hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer shadow-sm"
             >
               Previous
             </button>
@@ -147,16 +148,12 @@ export default function Table({
                 key={index}
                 onClick={() => page !== "..." && handlePageChange(page)}
                 disabled={page === "..."}
-                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-medium ${
-                  page === "..."
-                    ? "cursor-default text-gray-400"
-                    : "cursor-pointer"
-                } ${
-                  currentPage === page
-                    ? "bg-brand-orange text-white"
-                    : page !== "..."
-                    ? "border border-gray-200 bg-white text-gray-600 hover:bg-gray-50"
-                    : ""
+                className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold transition-all shadow-sm ${
+                  page === currentPage
+                    ? "bg-brand-blue text-white ring-2 ring-brand-blue/20"
+                    : page === "..."
+                    ? "bg-transparent text-gray-400 border-none shadow-none cursor-default"
+                    : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
                 }`}
               >
                 {page}
@@ -165,7 +162,7 @@ export default function Table({
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-2 sm:px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer"
+              className="px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-brand-blue hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium cursor-pointer shadow-sm"
             >
               Next
             </button>

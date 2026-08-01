@@ -24,12 +24,13 @@ import {
   ChevronRight,
   UserCheck,
   UserX,
+  Mic,
 } from "lucide-react";
 
 const menuConfig = {
   CREDIT: [
     { href: "/about", label: "MSME APPLICATION", icon: FileUser },
-    { href: "/dashboard", label: "FT CASH APPLICATIONS", icon: LayoutDashboard },
+    // { href: "/dashboard", label: "FT CASH APPLICATIONS", icon: LayoutDashboard },
     { href: "/disbursed", label: "DISBURSED", icon: Banknote },
     { href: "/pending", label: "PENDING", icon: FileQuestion },
     { href: "/approve", label: "APPROVED", icon: CheckSquare },
@@ -39,8 +40,8 @@ const menuConfig = {
     { href: "/fi-report", label: "FI REPORT", icon: Download },
     { href: "/add-employee", label: "ADD EMPLOYEE", icon: UserPlus },
     { href: "/employee-access", label: "EMPLOYEE MANAGEMENT", icon: Sliders },
-    { href: "/ao-approved", label: "AO Approved", icon: ThumbsUp },
-    { href: "/ao-exception", label: "AO Exception", icon: AlertCircle },
+    // { href: "/ao-approved", label: "AO Approved", icon: ThumbsUp },
+    // { href: "/ao-exception", label: "AO Exception", icon: AlertCircle },
     { href: "/voter-id-pending", label: "VOTER ID PENDING", icon: UserCheck },
     { href: "/voter-id-approved", label: "VOTER ID APPROVED", icon: UserCheck },
     { href: "/voter-id-rejected", label: "VOTER ID REJECTED", icon: UserX },
@@ -62,10 +63,15 @@ const menuConfig = {
   ],
 };
 
+menuConfig.ADMIN = [
+  ...menuConfig.CREDIT,
+  // { href: "/audio-transactions", label: "AUDIO TRANSACTIONS", icon: Mic },
+];
+
 export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
   const pathname = usePathname();
 
-  const menuItems = userRole === APP_ROLES.ADMIN ? menuConfig.CREDIT : (menuConfig[userRole] || []);
+  const menuItems = menuConfig[userRole] || [];
 
   return (
     <aside
@@ -74,6 +80,14 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
       }`}
     >
 
+      {/* Floating Toggle Button */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className="absolute top-1/2 -right-3 -translate-y-1/2 z-40 p-1 bg-white border border-gray-200 rounded-full shadow-md text-gray-500 hover:text-brand-orange hover:shadow-lg transition-all focus:outline-none"
+        title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+      >
+        {collapsed ? <ChevronRight size={16} strokeWidth={2.5} /> : <ChevronLeft size={16} strokeWidth={2.5} />}
+      </button>
 
       {/* Navigation Menu */}
       <nav id="sidebar-navigation" className="flex-1 overflow-y-auto py-2 px-3">
@@ -91,13 +105,13 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
                   className={`flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-200 group relative ${
                     isActive
                       ? "bg-brand-orange/10 text-brand-orange font-medium"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-brand-orange"
+                      : "text-black hover:bg-gray-50 hover:text-brand-orange"
                   }`}
                 >
                   <Icon
                     size={16}
                     className={`shrink-0 transition-transform duration-200 group-hover:scale-110 ${
-                      isActive ? "text-brand-orange" : "text-gray-400 group-hover:text-brand-orange"
+                      isActive ? "text-brand-orange" : "text-black group-hover:text-brand-orange"
                     }`}
                   />
                   {!collapsed && (

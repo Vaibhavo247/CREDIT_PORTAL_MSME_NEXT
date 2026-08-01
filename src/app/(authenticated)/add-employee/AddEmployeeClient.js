@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { insertEmployee, fetchEmployeeDetail } from "@/app/actions";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
+import PageHeader from "@/components/ui/PageHeader";
 
 function AddEmployeeForm() {
   const router = useRouter();
@@ -225,20 +226,16 @@ function AddEmployeeForm() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-brand-orange uppercase">
-          {isEditing ? "Update Employee" : "Add Employees"}
-        </h1>
-      </div>
+    <div className="page-container">
+      <PageHeader title={isEditing ? "Update Employee" : "Add Employees"} showBack={false} className="border-b border-gray-200" />
 
-      <div className="bg-white rounded-2xl border border-bank-border shadow-sm overflow-hidden">
+      <div className="card-container">
         {/* Tabs */}
         {!isEditing && (
           <div className="flex border-b border-gray-100">
             <button
               onClick={() => setActiveTab("single")}
-              className={`py-4 text-sm font-semibold transition select-none outline-none ${
+              className={`py-4 px-8 text-sm font-semibold transition select-none outline-none ${
                 activeTab === "single"
                   ? "text-brand-blue border-b-2 border-brand-orange bg-brand-blue/5"
                   : "text-gray-500 hover:bg-gray-50"
@@ -248,7 +245,7 @@ function AddEmployeeForm() {
             </button>
             <button
               onClick={() => setActiveTab("bulk")}
-              className={`py-4 text-sm font-semibold transition select-none outline-none ${
+              className={`py-4 px-8 text-sm font-semibold transition select-none outline-none ${
                 activeTab === "bulk"
                   ? "text-brand-blue border-b-2 border-brand-orange bg-brand-blue/5"
                   : "text-gray-500 hover:bg-gray-50"
@@ -265,8 +262,8 @@ function AddEmployeeForm() {
             <form onSubmit={handleSingleSubmit} className="flex flex-col gap-6 max-w-4xl">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* ID */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Employee ID</label>
+                <div className="form-group">
+                  <label className="form-label">Employee ID</label>
                   <input
                     type="text"
                     name="EmployeeId"
@@ -276,12 +273,12 @@ function AddEmployeeForm() {
                     placeholder="Enter numbers only"
                     required
                     maxLength={10}
-                    className="px-4 py-2 border border-bank-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange disabled:bg-gray-100 disabled:text-gray-500"
+                    className="form-input"
                   />
                 </div>
                 {/* Mobile */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Mobile Number</label>
+                <div className="form-group">
+                  <label className="form-label">Mobile Number</label>
                   <input
                     type="tel"
                     name="MobileNo"
@@ -295,8 +292,8 @@ function AddEmployeeForm() {
                   />
                 </div>
                 {/* First Name */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">First Name</label>
+                <div className="form-group">
+                  <label className="form-label">First Name</label>
                   <input
                     type="text"
                     name="FirstName"
@@ -308,8 +305,8 @@ function AddEmployeeForm() {
                   />
                 </div>
                 {/* Last Name */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Last Name</label>
+                <div className="form-group">
+                  <label className="form-label">Last Name</label>
                   <input
                     type="text"
                     name="LastName"
@@ -321,8 +318,8 @@ function AddEmployeeForm() {
                   />
                 </div>
                 {/* Branch */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Branch</label>
+                <div className="form-group">
+                  <label className="form-label">Branch</label>
                   <input
                     type="text"
                     name="Branch"
@@ -334,8 +331,8 @@ function AddEmployeeForm() {
                   />
                 </div>
                 {/* Role */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Role</label>
+                <div className="form-group">
+                  <label className="form-label">Role</label>
                   <select
                     name="Role"
                     value={formData.Role}
@@ -350,8 +347,8 @@ function AddEmployeeForm() {
                   </select>
                 </div>
                 {/* Business Vertical */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Business Vertical</label>
+                <div className="form-group">
+                  <label className="form-label">Business Vertical</label>
                   <select
                     name="BusinessVertical"
                     value={formData.BusinessVertical}
@@ -366,8 +363,8 @@ function AddEmployeeForm() {
                   </select>
                 </div>
                 {/* Manager Name */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Reporting Manager Name</label>
+                <div className="form-group">
+                  <label className="form-label">Reporting Manager Name</label>
                   <input
                     type="text"
                     name="reporting_manager_name"
@@ -379,8 +376,8 @@ function AddEmployeeForm() {
                   />
                 </div>
                 {/* Manager ID */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Reporting Manager ID</label>
+                <div className="form-group">
+                  <label className="form-label">Reporting Manager ID</label>
                   <input
                     type="text"
                     name="reporting_manager_id"
@@ -415,7 +412,7 @@ function AddEmployeeForm() {
               </div>
             </form>
           ) : (
-            <div className="flex flex-col gap-6">
+            <div className="page-container">
               {/* Bulk Upload Header */}
               <div className="flex flex-wrap items-center gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100">
                 <label className="px-4 py-2 bg-brand-blue hover:bg-brand-blue-hover text-white text-sm font-bold rounded-xl transition cursor-pointer flex items-center gap-2 shadow-sm">
@@ -454,35 +451,35 @@ function AddEmployeeForm() {
                   </div>
 
                   <div className="overflow-x-auto border border-gray-200 rounded-xl">
-                    <table className="w-full text-sm text-left text-gray-600">
-                      <thead className="bg-gray-100 text-gray-700 uppercase font-semibold text-xs border-b border-gray-200">
+                    <table className="w-full text-sm text-left text-black">
+                      <thead className="bg-gray-100 border-b border-gray-200">
                         <tr>
-                          <th className="px-4 py-3 whitespace-nowrap">ID</th>
-                          <th className="px-4 py-3 whitespace-nowrap">Name</th>
-                          <th className="px-4 py-3 whitespace-nowrap">Role</th>
-                          <th className="px-4 py-3 whitespace-nowrap">Vertical</th>
-                          <th className="px-4 py-3 whitespace-nowrap">Status</th>
+                          <th className="table-header-cell">ID</th>
+                          <th className="table-header-cell">Name</th>
+                          <th className="table-header-cell">Role</th>
+                          <th className="table-header-cell">Vertical</th>
+                          <th className="table-header-cell">Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-100">
                         {bulkData.map((emp, idx) => (
                           <tr key={idx} className="hover:bg-gray-50">
-                            <td className="px-4 py-3 whitespace-nowrap font-medium text-gray-800">{emp.EmployeeId}</td>
+                            <td className="px-4 py-3 whitespace-nowrap font-medium text-black">{emp.EmployeeId}</td>
                             <td className="px-4 py-3 whitespace-nowrap">{emp.FirstName} {emp.LastName}</td>
                             <td className="px-4 py-3 whitespace-nowrap">{emp.Role}</td>
                             <td className="px-4 py-3 whitespace-nowrap">{emp.BusinessVertical}</td>
                             <td className="px-4 py-3 whitespace-nowrap">
                               <span
-                                className={`px-2.5 py-1 text-[10px] font-bold rounded-lg uppercase tracking-wide ${
+                                className={`${
                                   emp.status === "VALID"
-                                    ? "bg-blue-100 text-blue-700"
+                                    ? "badge-info"
                                     : emp.status === "INVALID" || emp.status === "FAILED"
-                                    ? "bg-red-100 text-red-700"
+                                    ? "badge-error"
                                     : emp.status === "SUCCESS"
-                                    ? "bg-emerald-100 text-emerald-700"
+                                    ? "badge-success"
                                     : emp.status === "UPDATED"
-                                    ? "bg-amber-100 text-amber-700"
-                                    : "bg-gray-100 text-gray-700"
+                                    ? "badge-warning"
+                                    : "badge-neutral"
                                 }`}
                               >
                                 {emp.status}

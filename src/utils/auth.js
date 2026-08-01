@@ -10,7 +10,7 @@ export async function checkAuth(allowedRoles = []) {
   if (process.env.NODE_ENV === "development" && devBypass) {
     return {
       userId: "dev_bypass_user",
-      userRole: "admin",
+      userRole: "ADMIN",
       tokenExp: Date.now() + 1000000,
     };
   }
@@ -29,7 +29,13 @@ export async function checkAuth(allowedRoles = []) {
       redirect("/browser?message=Session expired. Please log in again.");
     }
 
-    const userRole = decoded.Role || null;
+    const userRole = decoded.Role ? decoded.Role.toUpperCase() : null;
+
+    console.log("=== AUTH DEBUG ===");
+    console.log("Decoded JWT Role:", decoded.Role);
+    console.log("Normalized userRole:", userRole);
+    console.log("Allowed Roles:", allowedRoles);
+    console.log("==================");
 
     if (!userRole) {
       console.warn("No role returned for user:", decoded.userId);

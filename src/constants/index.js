@@ -4,7 +4,7 @@
  */
 
 export const APP_ROLES = {
-  ADMIN: "admin",
+  ADMIN: "ADMIN",
   CREDIT: "CREDIT",
   AUDIT: "AUDIT",
   USERACCESS: "USERACCESS",

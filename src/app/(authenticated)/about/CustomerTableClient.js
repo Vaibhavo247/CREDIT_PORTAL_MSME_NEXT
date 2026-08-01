@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import * as XLSX from "xlsx";
 import dayjs from "dayjs";
@@ -130,7 +131,7 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
       width: 160,
     },
     {
-      title: "DATE",
+      title: "Date",
       dataIndex: "created_on",
       fixed: "left",
       width: 140,
@@ -157,7 +158,7 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
       width: 140,
     },
     {
-      title: "PAN",
+      title: "Pan",
       dataIndex: "pan_no",
       width: 140,
     },
@@ -211,14 +212,16 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white relative">
-      <PageHeader title={title} className="border-b border-gray-200" />
+    <div className="page-container bg-white relative h-full">
+      <PageHeader title={title} className="border-b border-gray-200" >
 
-      <div className="flex-1 flex flex-col overflow-auto">
-      
-        {/* Search Toolbar */}
-        <div className="py-4 flex shrink-0">
-          <Input
+        <div className="relative w-full md:w-80">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search size={18} className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            className="search-input"
             placeholder="Search by ID or Name"
             value={searchText}
             onChange={(e) => {
@@ -226,10 +229,15 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
               const isValid = /^[a-zA-Z0-9 ]*$/.test(value);
               if (isValid) handleSearch(value);
             }}
-            className="pl-10 w-full"
-            wrapperClassName="w-full sm:w-80"
           />
         </div>
+
+</PageHeader>
+
+      <div className="flex-1 flex flex-col overflow-auto">
+      
+        {/* Search Toolbar */}
+        
 
       {/* High Fidelity Table */}
         <Table 

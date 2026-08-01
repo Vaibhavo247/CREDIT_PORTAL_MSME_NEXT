@@ -111,12 +111,12 @@ export default function Modals({
       >
         <div className="flex flex-col gap-4 text-xs font-semibold text-gray-500">
           {/* Sector Select */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-gray-400">Sector</label>
+          <div className="form-group">
+            <label className="form-label">Sector</label>
             <select
               value={formSector}
               onChange={(e) => setFormSector(e.target.value)}
-              className="w-full px-3 py-2 border border-bank-border rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700"
+              className="form-input"
             >
               <option value="">Select Sector</option>
               {sectorSubsector
@@ -130,12 +130,12 @@ export default function Modals({
           </div>
 
           {/* Subsector Select */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-gray-400">Subsector</label>
+          <div className="form-group">
+            <label className="form-label">Subsector</label>
             <select
               value={formSubsector}
               onChange={(e) => setFormSubsector(e.target.value)}
-              className="w-full px-3 py-2 border border-bank-border rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700"
+              className="form-input"
             >
               <option value="">Select Subsector</option>
               {sectorSubsector
@@ -149,12 +149,12 @@ export default function Modals({
           </div>
 
           {/* Entity Type Select */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-gray-400">Entity Type</label>
+          <div className="form-group">
+            <label className="form-label">Entity Type</label>
             <select
               value={formEntityType}
               onChange={(e) => setFormEntityType(e.target.value)}
-              className="w-full px-3 py-2 border border-bank-border rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700"
+              className="form-input"
             >
               <option value="">Select Entity Type</option>
               {[
@@ -174,8 +174,8 @@ export default function Modals({
           </div>
 
           {/* Business Name Input */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-gray-400">Business Name</label>
+          <div className="form-group">
+            <label className="form-label">Business Name</label>
             <input
               type="text"
               value={formBusinessName}
@@ -187,29 +187,29 @@ export default function Modals({
                 }
               }}
               placeholder="Enter Business Name"
-              className="w-full px-3 py-2 border border-bank-border rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700"
+              className="form-input"
             />
           </div>
 
           {/* Date Picker Incorporation */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-gray-400">Business Incorporation Date</label>
+          <div className="form-group">
+            <label className="form-label">Business Incorporation Date</label>
             <input
               type="date"
               value={formBusinessIncorp}
               onChange={(e) => setFormBusinessIncorp(e.target.value)}
-              className="w-full px-3 py-2 border border-bank-border rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700"
+              className="form-input"
             />
           </div>
 
           {/* Date Picker Udyam Incorporation */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-gray-400">Udyam Incorporation Date</label>
+          <div className="form-group">
+            <label className="form-label">Udyam Incorporation Date</label>
             <input
               type="date"
               value={formUdyamIncorp}
               onChange={(e) => setFormUdyamIncorp(e.target.value)}
-              className="w-full px-3 py-2 border border-bank-border rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700"
+              className="form-input"
             />
           </div>
         </div>
@@ -223,8 +223,8 @@ export default function Modals({
         okText="Submit"
         onOk={handleLandmarkSubmit}
       >
-        <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Landmark</label>
+        <div className="form-group">
+          <label className="form-label">Landmark</label>
           <input
             type="text"
             placeholder="Enter Landmark details"
@@ -236,7 +236,7 @@ export default function Modals({
                 setLandmarkText(val);
               }
             }}
-            className="w-full px-3 py-2 border border-bank-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700 font-medium"
+            className="form-input"
           />
         </div>
       </Modal>
@@ -289,7 +289,7 @@ export default function Modals({
           </div>
 
           <div className="flex flex-col gap-2 mt-2">
-            <label htmlFor="pend-comm" className="text-[11px] font-bold uppercase tracking-wider text-gray-400">
+            <label htmlFor="pend-comm" className="form-label">
               Additional comments:
             </label>
             <textarea
@@ -298,7 +298,7 @@ export default function Modals({
               placeholder="Enter additional explanations here..."
               value={pendingComment}
               onChange={(e) => setPendingComment(e.target.value)}
-              className="w-full px-3 py-2 border border-bank-border rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700 leading-normal"
+              className="form-input"
             />
           </div>
         </div>
@@ -318,8 +318,8 @@ export default function Modals({
             Warning: You are rejecting this loan application. An official audit reason must be supplied.
           </p>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="rej-reason" className="text-[11px] font-bold uppercase tracking-wider text-gray-400">
+          <div className="form-group">
+            <label htmlFor="rej-reason" className="form-label">
               Audit Rejection Reason:
             </label>
             <textarea
@@ -329,7 +329,7 @@ export default function Modals({
               placeholder="Enter detailed reason for rejection (required)..."
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
-              className="w-full px-3 py-2 border border-bank-border rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white text-gray-700 leading-normal"
+              className="form-input"
             />
           </div>
         </div>

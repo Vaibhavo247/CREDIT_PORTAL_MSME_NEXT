@@ -3,9 +3,10 @@
 import React, { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Search } from "lucide-react";
 import Table from "@/components/ui/Table";
 import Spinner from "@/components/ui/Spinner";
+import PageHeader from "@/components/ui/PageHeader";
 import { fetchPdfDataAction } from "@/app/actions";
 import toast from "react-hot-toast";
 
@@ -117,39 +118,31 @@ export default function OnePagerClient({ initialData = [] }) {
   ];
 
   return (
-    <div className="flex flex-col h-full animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-brand-orange transition-colors mb-2 cursor-pointer"
-          >
-            <ChevronLeft size={16} />
-            Back
-          </button>
-          <h1 className="text-xl font-bold text-brand-orange">One Pager Data</h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Generate and download one-pager PDFs for all cases.
-          </p>
-        </div>
-        <div className="w-full sm:w-72">
+    <div className="page-container bg-white relative h-full">
+      <PageHeader title="One Pager Data" showBack={true} className="border-b border-gray-200">
+        <div className="relative w-full md:w-80">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search size={18} className="text-gray-400" />
+          </div>
           <input
             type="text"
+            className="search-input"
             placeholder="Search records..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-4 py-2 bg-white border border-bank-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all text-sm"
           />
         </div>
-      </div>
+      </PageHeader>
 
-      <div className="flex-1">
-        <Table
-          columns={columns}
-          dataSource={filteredData}
-          rowKey="msme_identifier"
-          pageSize={10}
-        />
+      <div className="flex-1 flex flex-col overflow-auto">
+        <div className="bg-white flex-1 overflow-hidden">
+          <Table
+            columns={columns}
+            dataSource={filteredData}
+            rowKey="msme_identifier"
+            pageSize={10}
+          />
+        </div>
       </div>
     </div>
   );

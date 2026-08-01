@@ -6,7 +6,7 @@ import Table from "@/components/ui/Table";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Download, RefreshCw } from "lucide-react";
+import {  Download, RefreshCw , Search } from "lucide-react";
 import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import dayjs from "dayjs";
@@ -222,8 +222,24 @@ export default function FiReportClient({ initialData = [] }) {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white relative">
-      <PageHeader title="FI Report" showBack={false} className="border-b border-gray-200" />
+    <div className="page-container bg-white relative h-full">
+      <PageHeader title="FI Report" showBack={false} className="border-b border-gray-200" >
+
+        <div className="relative w-full md:w-80">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search size={18} className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search..."
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+              max={endDate || dayjs().format('YYYY-MM-DD')}
+          />
+        </div>
+
+</PageHeader>
       
       <div className="flex-1 flex flex-col overflow-auto">
         <div className="py-4 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 shrink-0">

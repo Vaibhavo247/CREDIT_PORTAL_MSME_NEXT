@@ -13,9 +13,6 @@ export const metadata = {
 export default async function AboutPage() {
   await checkAuth([APP_ROLES.ADMIN, APP_ROLES.CREDIT, APP_ROLES.AUDIT]);
 
-  // Ensure only CREDIT and AUDIT roles can access
-  await checkAuth(["CREDIT", "AUDIT"]);
-
   let activeData = [];
   try {
     const resp = await serverFetch("get-udhyam-deviatedCases");

@@ -31,9 +31,9 @@ export default async function DashboardPage() {
       console.log("Failed to extract array. Found:", typeof extractedData, extractedData);
     }
   } catch (error) { if (error.message === "NEXT_REDIRECT" || (error.digest && error.digest.startsWith("NEXT_REDIRECT"))) throw error;
-    console.error("Error fetching FT Cash cases:", error);
+    console.error("Error fetching MSME cases:", error);
   }
 
   console.log("DASHBOARD RENDER LENGTH:", initialData.length);
-  return <CustomerTableClient initialData={initialData} title="FT CASH APPLICATIONS" source="ftcash" />;
+  return <CustomerTableClient initialData={initialData} title="MSME APPLICATIONS" source="ftcash" />;
 }

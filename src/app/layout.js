@@ -1,15 +1,11 @@
-import { Inter, Outfit } from "next/font/google";
+import { Krub } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const krub = Krub({
+  variable: "--font-krub",
   subsets: ["latin"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -32,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${outfit.variable} h-full antialiased font-sans`}
+      className={`${krub.variable} h-full antialiased font-sans`}
     >
       <body className="min-h-full flex flex-col">
         <Toaster position="top-right" />

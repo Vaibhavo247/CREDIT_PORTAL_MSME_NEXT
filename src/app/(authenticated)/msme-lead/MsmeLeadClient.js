@@ -101,8 +101,23 @@ export default function MsmeLeadClient({ initialData = [] }) {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white relative">
-      <PageHeader title="MSME Lead" showBack={false} className="border-b border-gray-200" />
+    <div className="page-container bg-white relative h-full">
+      <PageHeader title="MSME Lead" showBack={false} className="border-b border-gray-200" >
+
+        <div className="relative w-full md:w-80">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search size={18} className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search leads..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+
+</PageHeader>
       <div className="flex-1 flex flex-col overflow-auto">
         <div className="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
           <div className="relative w-full sm:w-80">

@@ -82,10 +82,10 @@ export default function SimpleStatusTableClient({ initialData = [], title = "APP
   ];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="page-container">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-brand-orange uppercase">
-          {title}
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-brand-orange capitalize">
+          {typeof title === 'string' ? title.toLowerCase() : title}
         </h1>
         
         {/* Table Controls */}
