@@ -1,6 +1,6 @@
 import React from "react";
 export const dynamic = 'force-dynamic';
-import SimpleStatusTableClient from "@/components/ui/SimpleStatusTableClient";
+import CustomerTableClient from "../about/CustomerTableClient";
 import { checkAuth } from "@/utils/auth";
 import { APP_ROLES } from "@/constants";
 
@@ -12,10 +12,11 @@ export default async function AoApprovedPage() {
   // Using an empty array for now as a placeholder
   
   return (
-    <SimpleStatusTableClient 
+    <CustomerTableClient 
       initialData={initialData} 
       title="AO APPROVED APPLICATIONS" 
       columnsConfig={[]} 
+      mode="simple"
     />
   );
 }

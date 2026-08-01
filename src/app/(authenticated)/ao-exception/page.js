@@ -1,6 +1,6 @@
 import React from "react";
 export const dynamic = 'force-dynamic';
-import SimpleStatusTableClient from "@/components/ui/SimpleStatusTableClient";
+import CustomerTableClient from "../about/CustomerTableClient";
 import { serverFetch } from "@/services/api";
 import { checkAuth } from "@/utils/auth";
 import { APP_ROLES } from "@/constants";
@@ -13,10 +13,11 @@ export default async function AoExceptionPage() {
   // Using an empty array for now as a placeholder
   
   return (
-    <SimpleStatusTableClient 
+    <CustomerTableClient 
       initialData={initialData} 
       title="AO EXCEPTION APPLICATIONS" 
       columnsConfig={[]} 
+      mode="simple"
     />
   );
 }

@@ -99,6 +99,10 @@ body {
   @apply px-4 py-2 text-sm font-medium border border-bank-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange disabled:bg-gray-100 disabled:text-gray-500;
 }
 
+.search-input {
+  @apply w-full pl-10 pr-4 py-2 text-sm font-medium border border-bank-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange bg-white shadow-sm transition-shadow hover:shadow-md;
+}
+
 .form-select {
   @apply px-4 py-2 text-sm font-medium border border-bank-border rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange/30 focus:border-brand-orange disabled:bg-gray-100 disabled:text-gray-500;
 }

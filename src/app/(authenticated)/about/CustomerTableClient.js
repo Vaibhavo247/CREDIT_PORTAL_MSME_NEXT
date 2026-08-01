@@ -15,7 +15,7 @@ import Spinner from "@/components/ui/Spinner";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { checkAgentAccess, saveActiveAgent } from "@/app/actions";
 
-export default function CustomerTableClient({ initialData = [], title = "MSME APPLICATIONS", source = "" }) {
+export default function CustomerTableClient({ initialData = [], title = "MSME APPLICATIONS", source = "", mode = "default", columnsConfig = [] }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   
@@ -118,7 +118,59 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
     }
   };
 
-  const columns = [
+  const simpleColumns = [
+    {
+      title: "Application ID",
+      dataIndex: "application_id",
+      fixed: "left",
+      width: 140,
+    },
+    ...(columnsConfig.includes("case_type") ? [{
+      title: "Case Type",
+      dataIndex: "case_type",
+      width: 120,
+    }] : []),
+    {
+      title: "Full Name",
+      dataIndex: "full_name",
+      width: 180,
+    },
+    {
+      title: "DATE",
+      dataIndex: "created_on",
+      width: 120,
+    },
+    {
+      title: "LOAN STATUS",
+      dataIndex: "loan_status",
+      width: 140,
+    },
+    {
+      title: "Mobile number",
+      dataIndex: "mobile_no",
+      width: 140,
+    },
+    {
+      title: "Business name",
+      dataIndex: "udyam_name",
+      width: 180,
+    },
+    {
+      title: "Action",
+      fixed: "right",
+      width: 100,
+      render: (_, record) => (
+        <button
+          onClick={() => router.push(`/view/${record.msme_identifier}`)}
+          className="px-4 py-1.5 text-xs font-semibold rounded-xl text-white bg-emerald-600 hover:bg-emerald-700 transition-colors cursor-pointer shadow-sm"
+        >
+          VIEW
+        </button>
+      ),
+    },
+  ];
+
+  const defaultColumns = [
     {
       title: "Vertical",
       dataIndex: "BusinessVertical",
@@ -210,6 +262,8 @@ export default function CustomerTableClient({ initialData = [], title = "MSME AP
       },
     },
   ];
+
+  const columns = mode === "simple" ? simpleColumns : defaultColumns;
 
   return (
     <div className="page-container bg-white relative h-full">

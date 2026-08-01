@@ -1,6 +1,6 @@
 import React from "react";
 export const dynamic = 'force-dynamic';
-import SimpleStatusTableClient from "@/components/ui/SimpleStatusTableClient";
+import CustomerTableClient from "../about/CustomerTableClient";
 import { serverFetch } from "@/services/api";
 import { checkAuth } from "@/utils/auth";
 import { APP_ROLES } from "@/constants";
@@ -19,10 +19,11 @@ export default async function RejectedPrePage() {
   }
 
   return (
-    <SimpleStatusTableClient 
+    <CustomerTableClient 
       initialData={initialData} 
-      title="REJECTED APPLICATIONS" 
-      columnsConfig={[]} 
+      title="PRE REJECTED APPLICATIONS" 
+      columnsConfig={["case_type"]} 
+      mode="simple"
     />
   );
 }

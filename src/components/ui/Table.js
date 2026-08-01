@@ -59,7 +59,7 @@ export default function Table({
   return (
     <div className={`w-full glass-panel rounded-none overflow-hidden shadow-sm flex-1 flex flex-col ${className}`}>
       {/* Table Container with scroll support */}
-      <div className="w-full overflow-x-auto flex-1 min-h-[55vh]">
+      <div className={`w-full overflow-x-auto ${currentData.length > 0 ? 'flex-1' : ''}`}>
         <table className="w-full text-left border-collapse min-w-max">
           <thead>
             <tr className="bg-gray-50/80 border-b border-bank-border">
@@ -117,7 +117,7 @@ export default function Table({
 
       {/* Empty State (Centered Outside Scroll Area) */}
       {!loading && currentData.length === 0 && (
-        <div className="w-full py-12 flex flex-col items-center justify-center text-gray-400 gap-2 bg-white/50 border-b border-bank-border">
+        <div className="w-full flex-1 flex flex-col items-center justify-center text-gray-400 gap-2 bg-white/50 border-b border-bank-border min-h-[40vh]">
           <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center shadow-sm border border-gray-100">
             <Inbox className="w-6 h-6 text-gray-300" strokeWidth={1.5} />
           </div>
