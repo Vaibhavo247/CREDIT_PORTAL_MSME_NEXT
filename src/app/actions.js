@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { serverFetch } from "@/services/api";
+import { serverFetch, decryptData } from "@/services/api";
 
 async function actionWrapper(actionName, fn) {
   try {
@@ -186,6 +186,37 @@ export const landmarkByAgent = async (payload) => actionWrapper("landmarkByAgent
 });
 
 // Server Action for uploading Udyam PDF document
+export async function saveCreditReviewStatus(msmeIdentifier, userAction, userName) {
+  return actionWrapper("saveCreditReviewStatus", async () => {
+    const payload = { msmeIdentifier, userAction, userName };
+    const resp = await serverFetch("update-credit-status", {
+      method: "POST",
+      body: payload,
+    });
+    return resp;
+  });
+}
+
+export async function getVoterImagesAction(msmeIdentifier) {
+  return actionWrapper("getVoterImagesAction", async () => {
+    const resp = await serverFetch(`webGetVoterImage/${msmeIdentifier}`);
+    
+    let finalData = resp?.data || resp;
+    const encryptedString = finalData?.encryptedResponse || resp?.encryptedResponse;
+    
+    if (encryptedString) {
+      const decrypted = decryptData(encryptedString);
+      finalData = decrypted?.data || decrypted || finalData;
+    }
+    
+    if (Array.isArray(finalData)) {
+      finalData = finalData[0] || {};
+    }
+    
+    return finalData;
+  });
+}
+
 export const updateUdyamDocs = async (payload) => actionWrapper("updateUdyamDocs", async () => {
   const resp = await serverFetch("updateUdyamDocs", {
       method: "POST",

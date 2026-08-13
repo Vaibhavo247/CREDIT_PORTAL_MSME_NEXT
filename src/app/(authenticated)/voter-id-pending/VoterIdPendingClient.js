@@ -9,12 +9,44 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import PageHeader from "@/components/ui/PageHeader";
 import { Search } from "lucide-react";
-import { verifyVoterId } from "@/app/actions";
+import { verifyVoterId, getVoterImagesAction } from "@/app/actions";
 import { useTableSearch } from "@/hooks/useTableSearch";
+import Modal from "@/components/ui/Modal";
+import Spinner from "@/components/ui/Spinner";
 
 export default function VoterIdPendingClient({ initialData = [], title = "" }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [imageModal, setImageModal] = useState({
+    isOpen: false,
+    loading: false,
+    frontImage: "",
+    backImage: "",
+    raw: null
+  });
+
+  const handleViewImages = async (record) => {
+    setImageModal({ isOpen: true, loading: true, frontImage: "", backImage: "" });
+    try {
+      const res = await getVoterImagesAction(record.msme_identifier);
+      if (res?.success) {
+        console.log("DEBUG handleViewImages:", res);
+        setImageModal({
+          isOpen: true,
+          loading: false,
+          frontImage: res.data?.decryptedData?.frontImage || res.data?.frontImage || "",
+          backImage: res.data?.decryptedData?.backImage || res.data?.backImage || "",
+          raw: res
+        });
+      } else {
+        toast.error("Failed to load images");
+        setImageModal((prev) => ({ ...prev, loading: false }));
+      }
+    } catch (error) {
+      toast.error("Error fetching images");
+      setImageModal((prev) => ({ ...prev, loading: false }));
+    }
+  };
 
   const { filteredData, searchText, handleSearch } = useTableSearch(
     initialData, 
@@ -65,6 +97,18 @@ export default function VoterIdPendingClient({ initialData = [], title = "" }) {
     { title: "Voter ID", dataIndex: "voter_id" },
     { title: "Mobile", dataIndex: "mobile_no" },
     { title: "VoterID Comment", dataIndex: "under_review_remark" },
+    {
+      title: "Voter Images",
+      render: (_, record) => (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleViewImages(record)}
+        >
+          View Images
+        </Button>
+      )
+    },
     { title: "Vertical", dataIndex: "BusinessVertical" },
     { title: "PAN Number", dataIndex: "pan_no" },
     { 
@@ -130,6 +174,35 @@ export default function VoterIdPendingClient({ initialData = [], title = "" }) {
           />
         </div>
       </div>
+
+      <Modal
+        isOpen={imageModal.isOpen}
+        onClose={() => setImageModal({ isOpen: false, loading: false, frontImage: "", backImage: "" })}
+        title="Voter ID Images"
+      >
+        {imageModal.loading ? (
+          <div className="flex justify-center p-8"><Spinner size="medium" /></div>
+        ) : (
+          <div className="flex flex-col gap-6">
+            <div>
+              <h3 className="font-semibold mb-2">Front Image</h3>
+              {imageModal.frontImage ? (
+                <img src={imageModal.frontImage} alt="Front" className="max-w-full rounded-xl border border-gray-200" />
+              ) : (
+                <p className="text-sm text-gray-500 italic">No front image available</p>
+              )}
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Back Image</h3>
+              {imageModal.backImage ? (
+                <img src={imageModal.backImage} alt="Back" className="max-w-full rounded-xl border border-gray-200" />
+              ) : (
+                <p className="text-sm text-gray-500 italic">No back image available</p>
+              )}
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
