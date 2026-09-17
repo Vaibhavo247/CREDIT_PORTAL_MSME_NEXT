@@ -17,7 +17,7 @@ export default function PageHeader({ title, children, showBack = false }) {
             <ArrowLeft className="w-5 h-5" />
           </button>
         )}
-        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-brand-orange capitalize">
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-brand-blue capitalize">
           {typeof title === 'string' ? title.toLowerCase() : title}
         </h1>
       </div>

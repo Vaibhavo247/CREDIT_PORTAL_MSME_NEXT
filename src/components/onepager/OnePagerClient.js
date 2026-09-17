@@ -98,17 +98,17 @@ export default function OnePagerClient({ initialData = [] }) {
 
         if (isGenerating) {
           return (
-            <div className="flex items-center justify-center gap-2 text-brand-orange text-sm font-medium w-full">
+            <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
               <Spinner size="small" />
-              Generating...
+              <span>Generating...</span>
             </div>
           );
         }
 
         return (
           <button
-            onClick={() => handleDownloadClick(record?.msme_identifier, appId, record)}
-            className="w-full px-3 py-1.5 rounded-lg bg-brand-blue text-white font-medium text-xs hover:bg-brand-blue-hover transition-colors cursor-pointer"
+            onClick={() => handleDownloadClick(record.msme_identifier, appId, record)}
+            className="px-4 py-2 text-sm font-semibold rounded-xl bg-brand-orange text-white hover:bg-orange-600 transition-colors shadow-sm hover:shadow"
           >
             Download PDF
           </button>

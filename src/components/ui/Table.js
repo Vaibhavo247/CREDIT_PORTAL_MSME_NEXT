@@ -57,16 +57,16 @@ export default function Table({
   };
 
   return (
-    <div className={`w-full glass-panel rounded-none overflow-hidden shadow-sm flex-1 flex flex-col ${className}`}>
+    <div className={`w-full bg-white rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)] flex-1 flex flex-col ${className}`}>
       {/* Table Container with scroll support */}
       <div className={`w-full overflow-x-auto ${currentData.length > 0 ? 'flex-1' : ''}`}>
         <table className="w-full text-left border-collapse min-w-max">
           <thead>
-            <tr className="bg-gray-50/80 border-b border-bank-border">
+            <tr className="bg-[#f5f5f5]">
               {columns.map((col, idx) => (
                 <th
                   key={col.key || col.dataIndex || idx}
-                  className="table-header-cell"
+                  className="p-3 text-sm font-semibold text-gray-800 text-left capitalize whitespace-nowrap"
                   style={{ width: col.width ? `${col.width}px` : "auto" }}
                   title={typeof col.title === "string" ? col.title : undefined}
                 >
@@ -75,14 +75,14 @@ export default function Table({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-bank-border">
+          <tbody>
             {!loading && currentData.length > 0 && (
               currentData.map((record, rIdx) => {
                 const key = typeof rowKey === "function" ? rowKey(record) : record[rowKey];
                 return (
                   <tr
                     key={key || rIdx}
-                    className="hover:bg-blue-50/30 transition-colors duration-150 group bg-white/50"
+                    className="hover:bg-gray-50 transition-colors duration-150 group bg-white"
                   >
                     {columns.map((col, cIdx) => {
                       const value = col.dataIndex ? record[col.dataIndex] : undefined;
@@ -91,7 +91,7 @@ export default function Table({
                       return (
                         <td
                           key={col.key || col.dataIndex || cIdx}
-                          className="py-4 px-6 text-sm font-medium text-black whitespace-nowrap"
+                          className="p-3 text-sm font-medium text-gray-800 whitespace-nowrap border-b border-[#eee]"
                           style={{ width: col.width ? `${col.width}px` : "auto" }}
                           title={typeof rendered === "string" || typeof rendered === "number" ? rendered : undefined}
                         >

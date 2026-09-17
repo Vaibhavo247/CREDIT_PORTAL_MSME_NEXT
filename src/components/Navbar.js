@@ -58,7 +58,7 @@ export default function Navbar({ employeeId, role, avatarSrc, collapsed }) {
                 className="w-10 h-10 rounded-full border border-gray-200 object-cover"
               />
             ) : (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-orange/10 text-xs font-bold text-brand-orange border border-brand-orange/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-blue/10 text-xs font-bold text-brand-blue border border-brand-blue/20">
                 {initials}
               </div>
             )}

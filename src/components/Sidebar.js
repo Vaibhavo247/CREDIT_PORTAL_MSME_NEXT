@@ -104,14 +104,14 @@ export default function Sidebar({ userId, userRole, collapsed, setCollapsed }) {
                   href={item.href}
                   className={`flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-200 group relative ${
                     isActive
-                      ? "bg-brand-orange/10 text-brand-orange font-medium"
-                      : "text-black hover:bg-gray-50 hover:text-brand-orange"
+                      ? "bg-brand-blue/10 text-brand-blue font-medium"
+                      : "text-black hover:bg-gray-50 hover:text-brand-blue"
                   }`}
                 >
                   <Icon
                     size={16}
                     className={`shrink-0 transition-transform duration-200 group-hover:scale-110 ${
-                      isActive ? "text-brand-orange" : "text-black group-hover:text-brand-orange"
+                      isActive ? "text-brand-blue" : "text-black group-hover:text-brand-blue"
                     }`}
                   />
                   {!collapsed && (
