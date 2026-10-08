@@ -17,6 +17,8 @@ export default function Modals({
   setIsPendingConfirmOpen,
   isRejectConfirmOpen,
   setIsRejectConfirmOpen,
+  isCpvModalOpen,
+  setIsCpvModalOpen,
   
   // Handlers
   handleBusinessDetailsSubmit,
@@ -24,6 +26,7 @@ export default function Modals({
   handleApproveAction,
   handlePendingAction,
   handleRejectAction,
+  handleCpvSubmit,
   
   // Conditionals
   isNtb,
@@ -51,7 +54,15 @@ export default function Modals({
   pendingComment,
   setPendingComment,
   pendingReasonsList,
-  setSelectedPendingReasons
+  setSelectedPendingReasons,
+  
+  // CPV
+  cpvValue,
+  setCpvValue,
+  cpvAgentId,
+  setCpvAgentId,
+  cpvFile,
+  setCpvFile
 }) {
   return (
     <>
@@ -210,6 +221,66 @@ export default function Modals({
               value={formUdyamIncorp}
               onChange={(e) => setFormUdyamIncorp(e.target.value)}
               className="form-input"
+            />
+          </div>
+        </div>
+      </Modal>
+
+      {/* CPV Update Modal */}
+      <Modal
+        isOpen={isCpvModalOpen}
+        onClose={() => setIsCpvModalOpen(false)}
+        title="Update Customer Perception Value"
+        okText="Submit CPV"
+        onOk={handleCpvSubmit}
+      >
+        <div className="flex flex-col gap-4 text-xs font-semibold text-gray-500">
+          <div className="form-group">
+            <label className="form-label">Customer Perception Value</label>
+            <select
+              value={cpvValue}
+              onChange={(e) => setCpvValue(e.target.value)}
+              className="form-input"
+            >
+              <option value="">Select CPV</option>
+              <option value="Positive">Positive</option>
+              <option value="Negative">Negative</option>
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">Agent ID</label>
+            <input
+              type="text"
+              placeholder="Enter numerical Agent ID"
+              value={cpvAgentId}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (/^\d*$/.test(val)) {
+                  setCpvAgentId(val);
+                }
+              }}
+              className="form-input"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Upload CPV Document (PDF, up to 5MB)</label>
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  if (file.size > 5 * 1024 * 1024) {
+                    alert("File size exceeds 5MB limit");
+                    e.target.value = "";
+                    return;
+                  }
+                  setCpvFile(file);
+                }
+              }}
+              className="form-input py-1.5"
             />
           </div>
         </div>

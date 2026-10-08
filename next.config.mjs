@@ -5,6 +5,11 @@ const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
   env: {
     NEXT_PUBLIC_APP_VERSION: pkg.version,
   },

@@ -17,6 +17,7 @@ import {
   landmarkByAgent,
   updateUdyamDocs,
   fetchBreReportData,
+  saveCpv,
 } from "@/app/actions";
 
 // Import modular sub-components
@@ -25,6 +26,7 @@ import BusinessDetails from "./components/BusinessDetails";
 import NtbvlDetails from "./components/NtbvlDetails";
 import LoanDetails from "./components/LoanDetails";
 import KycDocuments from "./components/KycDocuments";
+import BusinessImageUpload from "./components/BusinessImageUpload";
 import SidePanels from "./components/SidePanels";
 import Modals from "./components/Modals";
 
@@ -102,6 +104,12 @@ export default function ViewPersonClient({
   const [rejectReason, setRejectReason] = useState("");
   const [pendingComment, setPendingComment] = useState("");
   const [selectedPendingReasons, setSelectedPendingReasons] = useState([]);
+
+  // CPV state
+  const [isCpvModalOpen, setIsCpvModalOpen] = useState(false);
+  const [cpvValue, setCpvValue] = useState("");
+  const [cpvAgentId, setCpvAgentId] = useState("");
+  const [cpvFile, setCpvFile] = useState(null);
 
   const pendingReasonsList = [
     "Re-upload Business Image",
@@ -326,6 +334,41 @@ export default function ViewPersonClient({
     }
   };
 
+  // CPV submit
+  const handleCpvSubmit = async () => {
+    if (!cpvValue) return toast.error("Please select a Customer Perception Value");
+    if (!cpvAgentId) return toast.error("Please enter an Agent ID");
+    if (!cpvFile) return toast.error("Please upload a CPV Document");
+    
+    setLoading(true);
+    try {
+      const base64 = await convertToBase64(cpvFile);
+      const payload = {
+        id,
+        employee_id: cpvAgentId,
+        cpv_status: cpvValue.toLowerCase(),
+        cpv_doc: base64
+      };
+      
+      const resp = await saveCpv(payload);
+      if (resp?.success || resp?.status === 200 || !resp?.error) {
+        toast.success("CPV details updated successfully!");
+        setIsCpvModalOpen(false);
+        setCpvValue("");
+        setCpvAgentId("");
+        setCpvFile(null);
+        router.refresh();
+      } else {
+        toast.error(resp?.error || "Failed to update CPV details");
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("An error occurred while saving CPV details.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Case decision actions
   const handleApproveAction = async () => {
     setLoading(true);
@@ -465,6 +508,7 @@ export default function ViewPersonClient({
               isBusinessDetailsChecked={isBusinessDetailsChecked}
               setIsBusinessDetailsChecked={setIsBusinessDetailsChecked}
               setIsBusinessModalOpen={setIsBusinessModalOpen}
+              setIsCpvModalOpen={setIsCpvModalOpen}
             />
           ) : (
             <NtbvlDetails
@@ -488,6 +532,15 @@ export default function ViewPersonClient({
             docs={docs}
             downloadBase64Doc={downloadBase64Doc}
           />
+
+          {!isNtb && (
+            <BusinessImageUpload 
+              id={id} 
+              businessImages={businessImages} 
+              summary={summary} 
+              downloadBase64Doc={downloadBase64Doc} 
+            />
+          )}
         </div>
 
         <SidePanels
@@ -555,11 +608,14 @@ export default function ViewPersonClient({
         setIsPendingConfirmOpen={setIsPendingConfirmOpen}
         isRejectConfirmOpen={isRejectConfirmOpen}
         setIsRejectConfirmOpen={setIsRejectConfirmOpen}
+        isCpvModalOpen={isCpvModalOpen}
+        setIsCpvModalOpen={setIsCpvModalOpen}
         handleBusinessDetailsSubmit={handleBusinessDetailsSubmit}
         handleLandmarkSubmit={handleLandmarkSubmit}
         handleApproveAction={handleApproveAction}
         handlePendingAction={handlePendingAction}
         handleRejectAction={handleRejectAction}
+        handleCpvSubmit={handleCpvSubmit}
         isNtb={isNtb}
         isLoanJourneyLoading={isLoanJourneyLoading}
         loanJourney={loanJourney}
@@ -584,6 +640,12 @@ export default function ViewPersonClient({
         setPendingComment={setPendingComment}
         pendingReasonsList={pendingReasonsList}
         setSelectedPendingReasons={setSelectedPendingReasons}
+        cpvValue={cpvValue}
+        setCpvValue={setCpvValue}
+        cpvAgentId={cpvAgentId}
+        setCpvAgentId={setCpvAgentId}
+        cpvFile={cpvFile}
+        setCpvFile={setCpvFile}
       />
     </div>
   );

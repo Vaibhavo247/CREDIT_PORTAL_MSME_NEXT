@@ -185,6 +185,15 @@ export const landmarkByAgent = async (payload) => actionWrapper("landmarkByAgent
   return resp?.data;
 });
 
+// Server Action for saving CPV details
+export const saveCpv = async (payload) => actionWrapper("saveCpv", async () => {
+  const resp = await serverFetch("saveCpv", {
+      method: "POST",
+      body: payload,
+    });
+  return resp?.data;
+});
+
 // Server Action for uploading Udyam PDF document
 export async function saveCreditReviewStatus(msmeIdentifier, userAction, userName) {
   return actionWrapper("saveCreditReviewStatus", async () => {

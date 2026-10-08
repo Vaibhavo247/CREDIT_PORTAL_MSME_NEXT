@@ -19,6 +19,7 @@ export default function BusinessDetails({
   isBusinessDetailsChecked,
   setIsBusinessDetailsChecked,
   setIsBusinessModalOpen,
+  setIsCpvModalOpen,
 }) {
   return (
     <div className="rounded-2xl overflow-hidden bg-white">
@@ -102,12 +103,20 @@ export default function BusinessDetails({
 
         {/* Update Details Trigger */}
         {summary.credit_status !== "Approved" && summary.loan_status !== "Rejected" && (
-          <button
-            onClick={() => setIsBusinessModalOpen(true)}
-            className="px-4 py-2 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-xl self-start transition cursor-pointer"
-          >
-            UPDATE BUSINESS DETAILS
-          </button>
+          <div className="flex gap-4 self-start mt-2">
+            <button
+              onClick={() => setIsBusinessModalOpen(true)}
+              className="px-4 py-2 bg-brand-blue hover:bg-brand-blue-hover text-white text-xs font-semibold rounded-xl transition cursor-pointer"
+            >
+              UPDATE BUSINESS DETAILS
+            </button>
+            <button
+              onClick={() => setIsCpvModalOpen?.(true)}
+              className="px-4 py-2 bg-brand-orange hover:bg-orange-600 text-white text-xs font-semibold rounded-xl transition cursor-pointer"
+            >
+              UPDATE CPV
+            </button>
+          </div>
         )}
       </div>
     </div>
